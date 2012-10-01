@@ -1,0 +1,178 @@
+/* LAYOUT */
+body {
+	background: url(../img/topo2.png) no-repeat 0 0 #F0F3F2;
+	color: #30344B;
+	font-family: Verdana,Arial,Helvetica,sans-serif;
+	font-size: 12px;
+}
+input, textarea, select {
+	background: #FFFFFF;
+	border: 1px solid #CCCCCC;
+	border-radius: 5px;
+	font-size: 11px;
+	padding: 3px;
+}
+input[type='image'] {
+	background: url(../images/bt-busca.png) no-repeat 0 0;
+	border: 0 none;
+	display: inline-block;
+	height: 24px;
+	padding: 0;	
+	text-indent: -9000px;
+	width: 24px;
+}
+input[type='submit'], input[type='button'] {
+	background: #43CD80;
+	border: 0 none;
+	color: #FFFFFF;
+	cursor: pointer;
+	font-size: 12px;
+	font-weight: bold;
+	margin: 0 5px 0 0;
+	padding: 5px;
+	text-shadow: 1px 1px 1px #000000;
+	text-transform: lowercase;
+}
+input[type='submit']:hover, input[type='button']:hover {
+	background: red;
+}
+
+
+
+/*PADRÃO DE COR PARA 3 MENSAGENS DO SISTEMA, SETA O TEMPLATE.XHTML   INICIO*/
+.message {
+	padding: 5px;
+	list-style: none;
+	border: 0;
+	background: none;
+	padding: 0;
+	margin: 5px 0 8px 0;
+	font-size: 12px;
+	
+}
+
+.message li {
+	
+	
+/*padding: 15px 15px 15px 85px;
+margin: 20px;
+border: 1px solid 
+#ACBECE;
+background: url(/img/note_bg.gif) top left no-repeat 
+#F0F3F7;*/
+
+	background: no-repeat left center;
+	padding-top: 50px;
+	padding-left: 20px;
+	margin-left: 20px;
+	font-style: normal;
+	font-size-adjust: inherit;
+	font-size:15px;
+	border: 1px solid;
+    border-style: solid;
+    
+}
+
+.message li.infomsg {
+	background-image: url(../img/msgwarn.png) ;
+    background-color:#FFFFCC;
+    color: red;
+	
+}
+
+.message li.errormsg {
+	background-image: url(../img/msgwarn.png);
+    background-color:#FFFFCC;
+    color: red;
+}
+
+.message li.warnmsg {
+	background-image: url(../img/msgwarn.png);
+    background-color:#FFFFCC;
+    color:red;
+	
+}
+
+
+
+/*PADRÃO DE COR PARA 3 MENSAGENS DO SISTEMA, SETA O TEMPLATE.XHTML                   FIM */
+
+input[type="reset"] {
+	background-color: #4477aa;
+	background-image: none;
+	background-repeat: repeat;
+	background-attachment: scroll;
+	background-position: 0% 0%;
+	color: white;
+	margin-top: 5px;
+	margin-right: 5px;
+	margin-bottom: 5px;
+	margin-left: 5px;
+	border-top-color: gray;
+	border-right-color-value: gray;
+	border-bottom-color: gray;
+	border-left-color-value: gray;
+	border-left-color-ltr-source: physical;
+	border-left-color-rtl-source: physical;
+	border-right-color-ltr-source: physical;
+	border-right-color-rtl-source: physical;
+}
+
+.invisible {
+	visibility: hidden;
+}
+
+input[type='text'].inputDesabilitado, .inputDesabilitado {
+	background-color: #EEEEEE;
+	padding:3px;
+	border-color: #999999; 
+}
+
+.tooltip {
+	background-color: #F0F8FF;
+	border: 1px solid #BBBBBB;
+}
+
+.tooltip-text {
+	width: 350px;
+	height: 80px;
+	cursor: arrow;
+	border-width: 2px;
+	text-align: center;
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.tooltipData {
+	font-weight: bold;
+}
+
+.panel-tooltip {
+	border: 0px;
+	left: 0px;
+}
+
+.cssObservacoesTaxa {
+	color: #CF0A04;
+	font-size: 11px;
+	margin-bottom: 11px;
+}
+
+.cssObservacoesTituloTaxa {
+	color: #CF0A04;
+	font-size: 12px;
+	font-weight: bold;
+	margin-bottom: 10px;
+	margin-top: 10px;
+	padding-bottom: 3px;
+	width: 100%;
+}
+
+.tituloNegrito{
+	font-weight:bold;
+}
+.rich-messages-label {
+    line-height: 24px;
+    padding: 0 0 0 5px;
+}
+*/

@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui" 
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <ui:composition template="./layout.xhtml">
+        <ui:define name="esquerda">
+         <br/>
+        </ui:define>
+        <ui:define name="conteudo">
+            <h:form id="form1">
+                <p:panel header="#{msgs.form_find}">
+                    <h:panelGrid columns="6">
+                        <h:outputText value="Palavra Chave" />
+
+                        <p:keyboard id="pes" value="#{pessoaMB.pesquisa}"
+                                    showMode="button" buttonImageOnly="true"
+                                    buttonImage="/images/keyboardpencil.png"> 
+
+                            <f:ajax event="keyup" render="tabela" listener="#{pessoaMB.pesquisarPessoas}"/>
+                            <p:tooltip for="pes" value="PESQUISAR POR NOME OU LOGIN"
+                                       showEvent="focus" hideEvent="blur" showEffect="blind" hideEffect="explode" />
+                        </p:keyboard>
+                        
+                        <h:commandLink id="downloadlinkPdf" title="Download PDF">
+                            <p:graphicImage value="/images/icons/application_pdf.png" style="border:0"/>
+                            <p:fileDownload value="#{pessoaMB.downloadReportPdf()}" />
+                        </h:commandLink>
+                        
+                    </h:panelGrid>
+                </p:panel>
+
+                <p:dataTable id="tabela"
+                             value="#{pessoaMB.listaPessoas}"
+                             var="n"
+                             rows="10"
+                             paginatorPosition="bottom"
+                             paginator="true"
+                             rendered="true"
+                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}  Total de #{pessoaMB.listaPessoas.size()} registros encontrados"
+                             rowsPerPageTemplate="5,10,15">
+                    <f:facet name="header">
+                        <h:outputText value="Usuarios do sistema" />
+                    </f:facet>
+                    <p:column sortBy="#{n.nome}">
+                        <f:facet name="header">
+                            <h:outputText value="Nome" />
+                        </f:facet>
+                        <h:outputText value="#{n.nome}" id="nome" />
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="CPF" />
+                        </f:facet>
+                        <h:outputText value="#{n.cpf}"/>
+                    </p:column>
+
+                    <p:column sortBy="#{n.endereco}">
+                        <f:facet name="header">
+                            <h:outputText value="Endereço" />
+                        </f:facet>
+                        <h:outputText value="#{n.endereco}" id="endereco" />
+                    </p:column>
+
+                    <p:column sortBy="#{n.bairro}">
+                        <f:facet name="header">
+                            <h:outputText value="Bairro" />
+                        </f:facet>
+                        <h:outputText value="#{n.bairro}" id="bairro" />
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Ação" />
+                        </f:facet>
+
+                        <p:commandLink id="editlink" oncomplete="addEditPopup.show();" 
+                                       update=":addEditPanel" action="#{pessoaMB.prepareEditar}" immediate="true">
+                            <p:graphicImage value="/images/icons/edit.png" style="border:0"/>
+                            <f:setPropertyActionListener value="#{n}" target="#{pessoaMB.pessoa}" />
+                        </p:commandLink>
+                        <p:tooltip for="editlink" value="Editar" />
+
+                        <p:commandLink id="deletelink" oncomplete="deletePopup.show()">
+                            <p:graphicImage value="/images/icons/del.png" style="border:0"/>
+                            <f:setPropertyActionListener value="#{n}" target="#{pessoaMB.pessoa}" />
+                        </p:commandLink>
+                        <p:tooltip for="deletelink" value="Excluir" />
+
+                        <p:commandLink id="Viewlink" oncomplete="ViewPopup.show();" 
+                                       update=":ViewPanel" action="#{pessoaMB.prepareEditar}" immediate="true">
+                            <p:graphicImage value="/images/icons/detail.png" style="border:0"/>
+                            <f:setPropertyActionListener value="#{n}" target="#{pessoaMB.pessoa}" />
+                        </p:commandLink>
+                        <p:tooltip for="Viewlink" value="Visualizar" />
+
+                    </p:column>
+
+                    <f:facet name="footer">
+                        <p:columnGroup>
+                            <p:column colspan="1"/>
+                            <p:column>
+                                <p:commandLink id="addlink" oncomplete="addEditPopup.show()" update=":addEditPanel" 
+                                               action="#{pessoaMB.prepareAdicionar}" immediate="true">
+                                    <p:graphicImage value="/images/icons/add1.png" style="border:0"/>
+                                </p:commandLink>
+                                <p:tooltip for="addlink" value="Adicionar" />
+                            </p:column>
+                        </p:columnGroup>
+                    </f:facet>
+                    
+                </p:dataTable>
+      <h:panelGrid columns="6">
+        <p:panel header="Exportar Todos">  
+                <h:commandLink>  
+                    <p:graphicImage value="/images/excel.png" />  
+                    <p:dataExporter type="xls" target="tabela" fileName="pessoas" />  
+                </h:commandLink>  
+
+                <h:commandLink>  
+                    <p:graphicImage value="/images/pdf.png" />  
+                    <p:dataExporter type="pdf" target="tabela" fileName="pessoas"/>  
+                </h:commandLink>  
+
+                <h:commandLink>  
+                    <p:graphicImage value="/images/csv.png" />  
+                    <p:dataExporter type="csv" target="tabela" fileName="pessoas" />  
+                </h:commandLink>  
+
+                <h:commandLink>  
+                    <p:graphicImage value="/images/xml.png" />  
+                    <p:dataExporter type="xml" target="tabela" fileName="pessoas" />  
+                </h:commandLink>  
+        </p:panel>     
+        <p:panel header="Exportar Página">  
+                <h:commandLink>  
+                    <p:graphicImage value="/images/excel.png" />  
+                    <p:dataExporter type="xls" target="tabela" fileName="pessoas" pageOnly="true"/>  
+                </h:commandLink>  
+
+                <h:commandLink>  
+                    <p:graphicImage value="/images/pdf.png" />  
+                    <p:dataExporter type="pdf" target="tabela" fileName="pessoas" pageOnly="true"/>  
+                </h:commandLink>  
+
+                <h:commandLink>  
+                    <p:graphicImage value="/images/csv.png" />  
+                    <p:dataExporter type="csv" target="tabela" fileName="pessoas" pageOnly="true"/>  
+                </h:commandLink>  
+
+                <h:commandLink>  
+                    <p:graphicImage value="/images/xml.png" />  
+                    <p:dataExporter type="xml" target="tabela" fileName="pessoas" pageOnly="true"/>  
+                </h:commandLink>  
+         </p:panel>
+   </h:panelGrid>
+            </h:form>
+
+            <!-- ################################### -->
+            <!-- bloco de edição -->
+            <p:dialog widgetVar="addEditPopup"
+                      width="900"
+                      height="400"
+                      header="Cadastrar/Editar"
+                      modal="true"
+                      resizable="false"
+                      draggable="false">
+                <h:panelGrid columns="1" id="addEditPanel">
+                    <h:form>
+                        <h:panelGrid columns="6">
+                            <h:outputText value="Username:" />
+                            <p:inputText value="#{pessoaMB.pessoa.username}" size="20" id="user" required="true" requiredMessage="Campo Obrigatório."/>
+                            <p:message for="user" display="icon"/>
+
+                            <h:outputText value="Nome:" />
+                            <p:inputText value="#{pessoaMB.pessoa.nome}" size="40" id="nome" required="true" requiredMessage="Campo Obrigatório."/>
+                            <p:message for="nome" display="icon"/>
+
+                            <h:outputText value="CPF"/>
+                            <p:inputMask value="#{pessoaMB.pessoa.cpf}" mask="999.999.999-99" size="12" id="cpf" />
+                            <p:message for="cpf" display="icon"/>
+
+                            <h:outputText value="RG"/>
+                            <p:inputText value="#{pessoaMB.pessoa.rg}"  size="20" id="rg"/>
+                            <p:message for="rg" display="icon"/>
+
+                            <h:outputText value="Mãe"/>
+                            <p:inputText value="#{pessoaMB.pessoa.mae}" size="40" id="mae"/>
+                            <p:message for="mae" display="icon"/>
+                            
+                            <h:outputText value="Pai"/>
+                            <p:inputText value="#{pessoaMB.pessoa.pai}"  size="40" id="pai"/>
+                            <p:message for="pai" display="icon"/>
+
+                            <h:outputText value="Endereço" />
+                            <p:inputText value="#{pessoaMB.pessoa.endereco}" size="40" id="endereco"/>
+                            <p:message for="endereco" display="icon"/>
+
+                            <h:outputText value="Número"/>
+                            <p:inputText value="#{pessoaMB.pessoa.numero}" size="10" id="numero"/>
+                            <p:message for="numero" display="icon"/>
+
+                            <h:outputText value="Bairro"/>
+                            <p:inputText value="#{pessoaMB.pessoa.bairro}" size="40" id="bairro"/>
+                            <p:message for="bairro" display="icon"/>
+
+                            <h:outputText value="CEP"/>
+                            <p:inputMask value="#{pessoaMB.pessoa.cep}" mask="99999-999" size="20" id="cep"/>
+                            <p:message for="cep" display="icon"/>
+
+                            <h:outputText value="Ponto Referência" />
+                            <p:inputText value="#{pessoaMB.pessoa.pontoReferencia}" size="40" id="ponto"/>
+                            <p:message for="ponto" display="icon"/>
+
+                            <h:outputText value="OBS"/>
+                            <p:inputTextarea value="#{pessoaMB.pessoa.obs}" rows="5" cols="30" id="obs" maxlength="10"       
+                                             counterTemplate="{0} characters remaining." autoResize="false"/>  
+                            <p:message for="obs" display="icon"/>
+
+                            <h:outputText value="Sexo"/>
+                            <p:inputText value="#{pessoaMB.pessoa.sexo}" size="20" id="sexo"/>
+                            <p:message for="sexo" display="icon"/>
+
+                            <h:outputText value="Telefone"/>
+                            <p:inputMask value="#{pessoaMB.pessoa.telefone}" mask="(99)999-9999" size="20" id="telefone"/>
+                            <p:message for="telefone" display="icon"/>
+
+                            <h:outputText value="Celular"/>
+                            <p:inputMask value="#{pessoaMB.pessoa.celular}" mask="(99)999-9999" id="celular"/>
+                            <p:message for="celular" display="icon"/>
+
+                            <h:outputText value="E-mail"/>
+                            <p:inputText value="#{pessoaMB.pessoa.email}" size="20" id="email"/>
+                            <p:message for="email" display="icon"/>
+
+                            <h:outputText value="Status"/>
+                            <p:inputText value="#{pessoaMB.pessoa.status}" size="20" id="status"/>
+                            <p:message for="status" display="icon"/>                        
+
+                            <h:outputText value="fk_area"/>
+                            <p:inputText value="#{pessoaMB.pessoa.fkArea}" size="20" id="fk_area"/>
+                            <p:message for="fk_area" display="icon"/>                        
+ 
+                            <h:outputText value="fk_obito"/>
+                            <p:inputText value="#{pessoaMB.pessoa.fkObito}" size="20" id="fk_obito"/>
+                            <p:message for="fk_obito" display="icon"/>                        
+                            
+                            <h:outputText value="fk_familia"/>
+                            <p:inputText value="#{pessoaMB.pessoa.fkFamilia}" size="20" id="fk_familia"/>
+                            <p:message for="fk_familia" display="icon"/>
+                            
+                            <h:outputText value="fk_cor"/>
+                            <p:inputText value="#{pessoaMB.pessoa.fkCor}" size="20" id="fk_cor"/>
+                            <p:message for="fk_cor" display="icon"/>
+                            
+                            <h:outputText value="fk_raca"/>
+                            <p:inputText value="#{pessoaMB.pessoa.fkRaca}" size="20" id="fk_raca"/>
+                            <p:message for="fk_raca" display="icon"/>
+                            
+                            <h:outputText value="fk_pessoa_tipo"/>
+                            <p:inputText value="#{pessoaMB.pessoa.fkPessoaTipo}" size="20" id="fk_pessoa_tipo"/>
+                            <p:message for="fk_pessoa_tipo" display="icon"/>
+                            
+                            <h:outputText value="fk_estado"/>
+                            <p:inputText value="#{pessoaMB.pessoa.fkEstado}" size="20" id="fk_estado"/>
+                            <p:message for="fk_estado" display="icon"/>
+                            
+                            <h:outputText value="fk_cidade"/>
+                            <p:inputText value="#{pessoaMB.pessoa.fkEstado}" size="20" id="fk_cidade"/>
+                            <p:message for="fk_cidade" display="icon"/>
+                            
+ 
+                        </h:panelGrid>
+
+                        <h:outputText value="Perfil:" />
+                        <p:pickList id="pickList" value="#{pessoaMB.listaGrupos}"  
+                                    var="grupo"  
+                                    itemLabel="#{grupo}"  
+                                    itemValue="#{grupo}"
+                                    converter="papelConverter" >  
+                            <f:facet name="sourceCaption">Disponiveis</f:facet>
+                            <f:facet name="targetCaption">Permitidos</f:facet>
+                        </p:pickList> 
+
+                        <p:commandButton value="Gravar"
+                                         actionListener="#{pessoaMB.gravar}"
+                                         update=":form1:tabela, :addEditPanel"
+                                         oncomplete="handleLocalesDialogComplete(xhr, status, args, addEditPopup)"/>
+                        <p:commandButton value="Cancelar"
+                                         onclick="addEditPopup.hide();return false;" />
+                    </h:form>
+                </h:panelGrid>
+            </p:dialog>
+
+            <!-- ################################### -->
+
+            <!-- ################################### -->
+            <!-- bloco de Visualização -->
+            <p:dialog widgetVar="ViewPopup"
+                      width="900"
+                      height="400"
+                      header="Visualizar"
+                      modal="true"
+                      resizable="false"
+                      draggable="false">
+                <h:panelGrid columns="1" id="ViewPanel">
+                    <h:form>
+                        <h:panelGrid columns="6">
+
+                            <h:outputText value="Username:" />
+                            <p:inputText value="#{pessoaMB.pessoa.username}" size="20" id="user" disabled="true"/>
+                            <p:message for="user" display="icon"/>
+
+                            <h:outputText value="Nome:" />
+                            <p:inputText value="#{pessoaMB.pessoa.nome}" size="40" id="nome" disabled="true"/>
+                            <p:message for="nome" display="icon"/> 
+                  
+                            <h:outputText value="CPF"/>
+                            <p:inputMask value="#{pessoaMB.pessoa.cpf}" mask="999.999.999-99" size="12" id="cpf" disabled="true"/>
+                            <p:message for="cpf" display="icon"/>
+
+                            <h:outputText value="RG"/>
+                            <p:inputMask value="#{pessoaMB.pessoa.rg}" mask="99999999999999999" size="20" id="rg" disabled="true"/>
+                            <p:message for="rg" display="icon"/>
+
+                            <h:outputText value="Mãe"/>
+                            <p:inputText value="#{pessoaMB.pessoa.mae}" size="40" id="mae" disabled="true"/>
+                            <p:message for="mae" display="icon"/>
+
+                            <h:outputText value="Pai"/>
+                            <p:inputText value="#{pessoaMB.pessoa.pai}"  size="40" id="pai" disabled="true"/>
+                            <p:message for="pai" display="icon"/>
+
+                            <h:outputText value="Endereço" />
+                            <p:inputText value="#{pessoaMB.pessoa.endereco}" size="40" id="endereco" disabled="true"/>
+                            <p:message for="endereco" display="icon"/>
+
+                            <h:outputText value="Número"/>
+                            <p:inputText value="#{pessoaMB.pessoa.numero}" size="10" id="numero" disabled="true"/>
+                            <p:message for="numero" display="icon"/>
+
+                            <h:outputText value="Bairro"/>
+                            <p:inputText value="#{pessoaMB.pessoa.bairro}" size="40" id="bairro" disabled="true"/>
+                            <p:message for="bairro" display="icon"/>
+
+                            <h:outputText value="CEP"/>
+                            <p:inputMask value="#{pessoaMB.pessoa.cep}" mask="99999-999" size="20" id="cep" disabled="true"/>
+                            <p:message for="cep" display="icon"/>
+
+                            <h:outputText value="Ponto Referência" />
+                            <p:inputText value="#{pessoaMB.pessoa.pontoReferencia}" size="40" id="ponto" disabled="true"/>
+                            <p:message for="ponto" display="icon"/>
+
+                            <h:outputText value="OBS"/>
+                            <p:inputText value="#{pessoaMB.pessoa.obs}" size="40" id="obs" disabled="true"/>
+                            <p:message for="obs" display="icon"/>
+
+                            <h:outputText value="Sexo"/>
+                            <p:inputText value="#{pessoaMB.pessoa.sexo}" size="20" id="sexo" disabled="true"/>
+                            <p:message for="sexo" display="icon"/>
+
+                            <h:outputText value="Telefone"/>
+                            <p:inputMask value="#{pessoaMB.pessoa.telefone}" mask="(99) 999-9999" size="20" id="telefone" disabled="true"/>
+                            <p:message for="telefone" display="icon"/>
+
+                            <h:outputText value="Celular"/>
+                            <p:inputMask value="#{pessoaMB.pessoa.celular}" mask="(99) 999-9999" id="celular" disabled="true"/>
+                            <p:message for="celular" display="icon"/>
+
+                            <h:outputText value="E-mail"/>
+                            <p:inputText value="#{pessoaMB.pessoa.email}" size="20" id="email" disabled="true"/>
+                            <p:message for="email" display="icon"/>
+
+                            <h:outputText value="Status"/>
+                            <p:inputText value="#{pessoaMB.pessoa.status}" size="10" id="status" disabled="true"/>
+                            <p:message for="status" display="icon"/>                        
+                            
+                           
+                        </h:panelGrid>
+                    </h:form>
+                </h:panelGrid>
+            </p:dialog>
+
+            <!-- ################################### -->
+            <!-- bloco de exclusão -->
+            <p:dialog widgetVar="deletePopup" width="250" modal="true" header="Excluir" resizable="false">
+                <h:form>
+                    <h:outputText value="Deseja Excluir?"/>
+                    <h:panelGrid columns="2">
+                        <p:commandButton value="Sim"
+                                         action="#{pessoaMB.excluir}"
+                                         oncomplete="deletePopup.hide();"
+                                         update=":form1:tabela"/>
+
+                        <p:commandButton value="Cancelar"
+                                         onclick="deletePopup.hide();return false;" />
+                    </h:panelGrid>
+            
+            </h:form>
+            </p:dialog>
+        </ui:define>
+    </ui:composition>
+</html>

@@ -1,0 +1,115 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <link type="text/css" rel="stylesheet" href="#{request.contextPath}/css/application.css"/>
+        
+         
+    </h:head>
+    
+    <p:panel  styleClass="google-header-bar"> 
+        <img src="images/logop.png"></img> 
+     </p:panel>
+    
+    <h:body>
+        <div id="limites">
+        <f:view contentType="text/html" locale="#{i18nMB.currentLocale}">
+            
+            <h:form id="form1"  class="painellogin">
+                <p:panel header="Login" widgetVar="LoginPanel" styleClass="signin" rendered="#{!loginMB.firstTimeLogin}">
+                    <h:panelGrid columns="2">
+                        <h:commandLink value="#{msgs.portuguese}" action="#{i18nMB.portugueseLocale}" />
+
+                        <h:commandLink value="#{msgs.english}" action="#{i18nMB.englishLocale}" />
+                    </h:panelGrid>
+                    <h:panelGrid columns="1">
+                        <h:outputText value="#{msgs.username}" />
+                        <p:inputText value="#{loginMB.username}"/>
+
+                        <h:outputText value="#{msgs.password}" />
+                        <p:password value="#{loginMB.password}" feedback="false"/>
+
+                        <p:commandButton type="submit" value="#{msgs.login}" action="#{loginMB.doLogin}" update=":form1:invalido"/>
+
+                        <p:commandLink  value="#{msgs.forgot_pass}." id="mailRecover" onclick="lostMailPanel.show();">
+                        </p:commandLink>
+
+                        <p:messages id="invalido" />
+                    </h:panelGrid>
+                </p:panel>
+
+                <p:panel header="#{msgs.first_login}" widgetVar="FirstLogPanel" style="width: 250px; margin: auto;" rendered="#{loginMB.firstTimeLogin}">
+                    <h:panelGrid columns="2">
+                        <h:commandLink value="#{msgs.portuguese}" action="#{i18nMB.portugueseLocale}" />
+
+                        <h:commandLink value="#{msgs.english}" action="#{i18nMB.englishLocale}" />
+                    </h:panelGrid>
+                    <h:panelGrid columns="2">
+                        <h:outputText value="#{msgs.name}" />
+                        <p:inputText value="#{loginMB.pessoa.nome}"/>
+                        
+                        <h:outputText value="#{msgs.surname}" />
+                        <p:inputText value="#{loginMB.pessoa.sobrenome}"/>
+                        
+                        <h:outputText value="#{msgs.username}" />
+                        <p:inputText value="#{loginMB.pessoa.username}"/>
+                        
+                        <h:outputText value="#{msgs.mail}" />
+                        <p:inputText value="#{loginMB.pessoa.email}"/>
+                        
+                        <h:outputText value="#{msgs.rg}" />
+                        <p:inputText value="#{loginMB.pessoa.rg}"/>
+                        
+                        <h:outputText value="#{msgs.cpf}" />
+                        <p:inputText value="#{loginMB.pessoa.cpf}"/>
+
+                        <h:outputText value="#{msgs.password}" />
+                        <p:password value="#{loginMB.password}" feedback="true"/>
+
+                        <p:commandButton value="#{msgs.add}"
+                                         ajax="true"
+                                         actionListener="#{loginMB.cadastrar()}"
+                                         update=":form1, :form1:invalido"/>
+                        
+                    </h:panelGrid>
+                </p:panel>
+
+            </h:form>
+            
+        </f:view>
+     </div>            
+
+        
+        <p:dialog header="#{msgs.recovery_password}" widgetVar="lostMailPanel" modal="true" width="280" resizable="false" draggable="false">
+            <h:form>
+                <p:outputPanel>
+                    <h:panelGrid columns="1">
+                        <h:outputText value="#{msgs.enter_mail}" />
+                        <p:inputText value="#{loginMB.email}" id="email" size="40" required="true"/>
+                        <p:messages id="invalido2" />
+                        <p:commandButton value="#{msgs.recovery_password}"
+                                         ajax="true"
+                                         actionListener="#{loginMB.recuperarSenha()}"
+                                         update=":form1, :form1:invalido"
+                                         oncomplete="lostMailPanel.hide(); return false;"/>
+                        <!-- oncomplete="handleLocalesDialogComplete(xhr, status, args, lostMailPanel)"/> Somente se o erro tiver de ser mostrado no dialog -->
+
+                    </h:panelGrid>
+                </p:outputPanel>
+            </h:form>
+           
+        </p:dialog>
+<!-- <p:panel  styleClass="center"> 
+  
+ </p:panel>-->
+ <p:panel  styleClass="footer"> 
+     <img src="images/saude-da-familia.jpg" height="600" width="600"></img> 
+ </p:panel> 
+
+    </h:body>
+</html>
+

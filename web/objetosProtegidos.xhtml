@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui" 
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <ui:composition template="./layout.xhtml">
+        <ui:define name="esquerda">
+            <br/>
+        </ui:define>
+        <ui:define name="conteudo">
+            <h:form id="form1">
+
+                <p:panel header="#{label.general_Find}">
+                    <h:panelGrid columns="2">
+                        <h:outputText value="Palavra Chave" />
+
+                        <p:inputText value="#{objetoProtegidoMB.pesquisa}">
+                            <f:ajax event="keyup" render="tabela" listener="#{objetoProtegidoMB.pesquisarObjetosProtegidos()}" />
+                        </p:inputText>
+
+                    </h:panelGrid>
+                </p:panel>
+
+                <p:dataTable id="tabela"
+                             value="#{objetoProtegidoMB.listaObjetos}"
+                             var="n"
+                             rows="10"
+                             paginatorPosition="bottom"
+                             paginator="true"
+                             rendered="true"
+                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}  Total de #{pessoaMB.listaPessoas.size()} registros encontrados"
+                             rowsPerPageTemplate="5,10,15">
+                    <f:facet name="header">
+                        <h:outputText value="Papéis" />
+                    </f:facet>
+
+                    <p:column sortBy="#{n.nome}">
+                        <f:facet name="header">
+                            <h:outputText value="Nome" />
+                        </f:facet>
+                        <h:outputText value="#{n.nome}" id="usuario" />
+                    </p:column>
+                    
+                    <p:column sortBy="#{n.descricao}">
+                        <f:facet name="header">
+                            <h:outputText value="Descrição" />
+                        </f:facet>
+                        <h:outputText value="#{n.descricao}" id="descricao" />
+                    </p:column>
+ 
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Ação" />
+                        </f:facet>
+
+                        <p:commandLink id="editlink"  oncomplete="addEditPopup.show();" update=":addEditPanel" action="#{objetoProtegidoMB.prepareEditar}" immediate="true" disabled="#{!objetoProtegidoMB.criarEditarExcluirObjeto}">
+                            <p:graphicImage value="#{objetoProtegidoMB.imagemEditar}" style="border:0"/>
+                            <f:setPropertyActionListener value="#{n}" target="#{objetoProtegidoMB.objetoProtegido}" />
+                        </p:commandLink>
+                        <p:tooltip for="editlink" value="Editar" />
+
+                        <p:commandLink id="deletelink"  oncomplete="deletePopup.show()" disabled="#{!objetoProtegidoMB.criarEditarExcluirObjeto}">
+                            <p:graphicImage value="#{objetoProtegidoMB.imagemDeletar}" style="border:0"/>
+                            <f:setPropertyActionListener value="#{n}" target="#{objetoProtegidoMB.objetoProtegido}" />
+                        </p:commandLink>
+                        <p:tooltip for="deletelink" value="Excluir" />
+
+                    </p:column>
+
+                    <f:facet name="footer">
+                        <p:columnGroup>
+                            <p:column colspan="1"/>
+                            <p:column>
+                                <p:commandLink id="addlink" oncomplete="addEditPopup.show()" update=":addEditPanel" action="#{objetoProtegidoMB.prepareAdicionar}" immediate="true" disabled="#{!objetoProtegidoMB.criarEditarExcluirObjeto}">
+                                    <p:graphicImage value="#{objetoProtegidoMB.imagemAdicionar}" style="border:0"/>
+                                </p:commandLink>
+                                <p:tooltip for="addlink" value="Adicionar" />
+                            </p:column>
+                        </p:columnGroup>
+                    </f:facet>
+
+                </p:dataTable>
+
+            </h:form>
+
+            <!-- ################################### -->
+            <!-- bloco de edição -->
+            <p:dialog widgetVar="addEditPopup"
+                      width="350"
+                      header="Cadastrar/Editar"
+                      modal="true"
+                      resizable="false"
+                      draggable="false">
+                <h:panelGrid columns="1" id="addEditPanel">
+                    <h:form>
+                        <h:panelGrid columns="3">
+                            <h:outputText value="Nome:" />
+                            <p:inputText value="#{objetoProtegidoMB.objetoProtegido.nome}" id="nome" required="true" requiredMessage="Campo Obrigatório."/>
+                            <p:message for="nome" display="icon"/>
+                            
+                            <h:outputText value="Descrição:" />
+                            <p:inputText value="#{objetoProtegidoMB.objetoProtegido.descricao}" id="desc" required="true" requiredMessage="Campo Obrigatório."/>
+                            <p:message for="desc" display="icon"/>
+
+                        </h:panelGrid>
+
+                        <p:commandButton value="Gravar"
+                                         actionListener="#{objetoProtegidoMB.gravar}"
+                                         update=":form1:tabela, :addEditPanel"
+                                         oncomplete="handleLocalesDialogComplete(xhr, status, args, addEditPopup)"/>
+                        <p:commandButton value="Cancelar"
+                                         onclick="addEditPopup.hide();return false;" />
+                    </h:form>
+                </h:panelGrid>
+            </p:dialog>
+
+            <!-- ################################### -->
+            <!-- bloco de exclusão -->
+            <p:dialog widgetVar="deletePopup" width="250" modal="true" header="Excluir" resizable="false">
+                <h:form>
+                    <h:outputText value="Deseja Excluir?"/>
+                    <h:panelGrid columns="2">
+                        <p:commandButton value="Sim"
+                                         action="#{objetoProtegidoMB.excluir}"
+                                         oncomplete="deletePopup.hide();"
+                                         update=":form1:tabela"/>
+
+                        <p:commandButton value="Cancelar"
+                                         onclick="deletePopup.hide();return false;" />
+                    </h:panelGrid>
+                </h:form>
+            </p:dialog>
+
+        </ui:define>
+    </ui:composition>
+</html>

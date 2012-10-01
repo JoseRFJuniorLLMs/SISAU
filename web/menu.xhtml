@@ -1,0 +1,116 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form>
+      <p:toolbar>
+          <p:toolbarGroup align="left">
+          
+              <p:menubar>
+                <p:submenu label="Cadastro" icon="ui-icon-document">
+                    <p:menuitem url="/faces/pessoas.xhtml"
+                                value="Pessoas"/>
+                        <p:menuitem url="/faces/medicos.xhtml"
+                                value="Medicos"/>
+                
+                </p:submenu>
+                <p:spacer width="100" height="10" />
+                <p:submenu label="Relatórios" icon="ui-icon-print">
+                </p:submenu>
+                <p:spacer width="100" height="10" />
+                
+                <p:submenu label="Pesquisas" icon="ui-icon-search">
+                </p:submenu>
+                <p:spacer width="100" height="10" />
+                
+                <p:submenu label="Gestão" icon="ui-icon-person">
+                    <p:menuitem url="/faces/auditoria.xhtml" value="Auditoria"/>
+                    <p:menuitem url="/faces/papeis.xhtml" value="Papeis"/>
+                    <p:menuitem url="/faces/senha.xhtml" value="Senha"/>
+                    <p:menuitem url="/faces/objetosProtegidos.xhtml" value="Objetos Protegidos"/>
+                </p:submenu>       
+                <p:spacer width="100" height="10" />
+                
+                 <p:submenu label="Ajuda" icon="ui-icon-help">
+                    <p:menuitem onclick="creditsDialog.show();" value="Ajuda"/>
+                   
+                </p:submenu>
+                
+                <p:spacer width="100" height="10" />
+                <p:menuitem value="Sair" action="#{loginMB.doLogout}"/>
+            </p:menubar>
+         </p:toolbarGroup>
+          
+          <p:toolbarGroup  align="right">
+          <p:graphicImage id="img" value="../images/icons/add_user.png" style="cursor:pointer"/>
+          <p:overlayPanel id="imgPanel" for="img" showEffect="blind" hideEffect="explode" showEvent="mouseover" hideEvent="mousedown"  
+            styleClass="ui-helper-clearfix">  
+          <p:imageSwitch id="imgSwitch" effect="fade">  
+              <p:outputPanel id="panel" autoUpdate="true">
+                        <p> 
+                        <h:outputText id ="infoLoginLogado1" value="Login.:#{userSessionMB.loggedUser.username}"></h:outputText>
+                        </p><p> 
+                        <h:outputText id ="infoUsuarioLogado1" value="Nome.:#{userSessionMB.loggedUser.nome}"></h:outputText>
+                        </p><p>
+                        <h:outputText id ="infoEmailLogado1" value="Email.:#{userSessionMB.loggedUser.email}"></h:outputText>
+                        </p><p>
+                        <h:outputText id ="infoCelLogado" value="Celular.:#{userSessionMB.loggedUser.celular}"></h:outputText>
+                        </p><p>
+                        <h:outputText id ="infoEndLogado" value="Endereço.:#{userSessionMB.loggedUser.endereco}"></h:outputText>
+                        </p><p>
+                        <h:outputText id ="infoBairroLogado" value="Bairro.:#{userSessionMB.loggedUser.bairro}"></h:outputText>
+                        </p><p>
+                       
+                        </p><p>
+                        <h:outputText id ="infoCPFLogado1" value="CPF.:#{userSessionMB.loggedUser.cpf}"></h:outputText> 
+                        </p><p>
+                        <h:outputText id ="infoRgLogado1" value="RG.:#{userSessionMB.loggedUser.rg}"></h:outputText>
+                        </p><p>
+                            <h:outputText id ="infoMaeLogado1" value="Mae.:#{userSessionMB.loggedUser.mae}"></h:outputText>    
+                        </p>
+               <p:menubar>
+                <p:submenu label="Gestão" icon="ui-icon-person">
+                    <p:menuitem url="/faces/auditoria.xhtml" value="Auditoria"/>
+                    <p:menuitem url="/faces/papeis.xhtml" value="Papeis"/>
+                    <p:menuitem url="/faces/senha.xhtml" value="Senha"/>
+                    <p:menuitem url="/faces/objetosProtegidos.xhtml" value="Objetos Protegidos"/>
+                </p:submenu>       
+                <p:spacer width="100" height="10" />
+                
+                 <p:submenu label="Ajuda" icon="ui-icon-help">
+                    <p:menuitem onclick="creditsDialog.show();" value="Ajuda"/>
+                   
+                </p:submenu>
+                
+                 <p:submenu label="Senha" icon="ui-icon-edit">
+                     <p:menuitem url="/faces/senha.xhtml" value="Senha"/>
+                   
+                </p:submenu>
+                
+                <p:spacer width="100" height="10" />
+                <p:menuitem value="Sair" action="#{loginMB.doLogout}"/>
+            </p:menubar>
+                </p:outputPanel>             
+             
+          </p:imageSwitch>  
+          </p:overlayPanel> 
+          
+          </p:toolbarGroup>
+          <p:toolbarGroup  align="right">
+                <h:panelGrid columns="5">
+                      <h:panelGrid columns="1">
+                        <h:outputText id ="infoLoginLogado" value="Login.:#{userSessionMB.loggedUser.username}"></h:outputText>
+                        <h:outputText id ="infoUsuarioLogado" value="Nome.:#{userSessionMB.loggedUser.nome}"></h:outputText>
+<!--                        <h:outputText id ="infoEmailLogado" value="Email.:#{userSessionMB.loggedUser.email}"></h:outputText>
+                        <h:outputText id ="infoCPFLogado" value="CPF.:#{userSessionMB.loggedUser.cpf}"></h:outputText>  -->
+                    </h:panelGrid>
+                </h:panelGrid>
+            </p:toolbarGroup>
+     </p:toolbar>
+    </h:form>
+</ui:composition>
+
+
+

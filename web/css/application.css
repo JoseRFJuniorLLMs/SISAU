@@ -1,0 +1,48 @@
+root { 
+    display: block;
+}
+/* 
+left e top: referência é o canto superior esquerdo;
+left e bottom: referência é o canto inferior esquerdo;
+right e top : referência é o canto superior direito;
+right e bottom: referência é o canto inferior direito.
+*/
+.ui-widget, .ui-widget .ui-widget {
+    font-size: 11px !important;
+}
+.painellogin{
+    margin: 12px 0 0;
+    padding: 20px 25px 15px;
+}
+.google-header-bar {
+    height: 71px;
+    background: #F1F1F1;
+    border-bottom: 1px solid #E5E5E5;
+    overflow: hidden;
+}
+.footer {
+    height: 450px;
+    left:  10%;
+    bottom: 10%;    
+    background: #F1F1F1;
+    border-bottom: 1px solid #E5E5E5;
+    overflow: hidden;
+}
+.main {
+     width: auto;
+}
+.center {
+     position: absolute;
+     top: 30%; 
+     left: 10%; 
+     width: 600px; 
+     height: 150px;
+}
+
+#limites { 
+           position:absolute; 
+           top: 20%; 
+           left: 70%; 
+           width: 340px; 
+           height: 200px;
+}

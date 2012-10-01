@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report1" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="496" splitType="Stretch">
+			<rectangle>
+				<reportElement x="289" y="0" width="266" height="66"/>
+				<graphicElement>
+					<pen lineWidth="1.25"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="289" y="0" width="266" height="18"/>
+				<graphicElement>
+					<pen lineWidth="1.25"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="66" width="555" height="20"/>
+				<graphicElement>
+					<pen lineWidth="1.25"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="86" width="555" height="56"/>
+				<graphicElement>
+					<pen lineWidth="1.25"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="86" width="218" height="56"/>
+				<graphicElement>
+					<pen lineWidth="1.25"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="218" y="86" width="127" height="56"/>
+				<graphicElement>
+					<pen lineWidth="1.25"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="86" width="218" height="15"/>
+				<graphicElement>
+					<pen lineWidth="1.25"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="218" y="86" width="127" height="15"/>
+				<graphicElement>
+					<pen lineWidth="1.25"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="345" y="86" width="210" height="15"/>
+				<graphicElement>
+					<pen lineWidth="1.25"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="101" width="71" height="41"/>
+				<graphicElement>
+					<pen lineWidth="1.25"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="71" y="101" width="71" height="41"/>
+				<graphicElement>
+					<pen lineWidth="1.25"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="101" width="71" height="15"/>
+				<graphicElement>
+					<pen lineWidth="1.25"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="71" y="101" width="71" height="15"/>
+				<graphicElement>
+					<pen lineWidth="1.25"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="142" y="101" width="76" height="15"/>
+				<graphicElement>
+					<pen lineWidth="1.25"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="142" width="555" height="20"/>
+				<graphicElement>
+					<pen lineWidth="1.25"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="162" width="555" height="20"/>
+				<graphicElement>
+					<pen lineWidth="1.25"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="182" width="555" height="20"/>
+				<graphicElement>
+					<pen lineWidth="1.25"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="289" y="0" width="266" height="18"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[ 01 - PROTOCOLO (ETIQUETA)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="66" width="555" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DECLARAÇÃO CADASTRAL - PROFISSIONAL AUTÔNOMO COM ESTABELECIMENTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="86" width="218" height="15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Para uso da Prefeitura]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="218" y="86" width="127" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[ 02 -ESPECIFICAÇÃO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="345" y="86" width="210" height="15"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[ 03 - NÚMERO DA INSCRIÇÃO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="101" width="71" height="15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[CÓD.MOB.Nº]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="71" y="101" width="71" height="15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[CONT.Nº]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="142" y="101" width="76" height="15"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[ALV. Nº]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="142" width="234" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ 04 - IDENTIFICAÇÃO DO REQUERENTE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="182" width="234" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ 05 - ENDEREÇO DO ESTABELECIMENTO]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="0" y="202" width="555" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="222" width="555" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="242" width="555" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="262" width="555" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="282" width="555" height="20"/>
+				<graphicElement>
+					<pen lineWidth="1.25"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="282" width="234" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ 06 - ENDEREÇO PARA CORRESPONDÊNCIA]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="0" y="302" width="555" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="322" width="555" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="342" width="555" height="20"/>
+				<graphicElement>
+					<pen lineWidth="1.25"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="0" y="342" width="234" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[ 07 - IDENTIFICAÇÃO DO CONTABILISTA]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="0" y="362" width="555" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="382" width="555" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="402" width="555" height="20"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="422" width="555" height="20"/>
+			</rectangle>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

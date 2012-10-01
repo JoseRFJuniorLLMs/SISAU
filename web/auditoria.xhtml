@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui" 
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <ui:composition template="./layout.xhtml">
+        <ui:define name="esquerda">
+            <br/>
+        </ui:define>
+        <ui:define name="conteudo">
+            <h:form id="form1">
+
+                <p:dataTable id="tabela"
+                             value="#{auditoriaMB.listaAuditoria}"
+                             var="n"
+                             rows="15"
+                             paginatorPosition="bottom"
+                             paginator="true"
+                             rendered="true"
+                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}  Total de #{auditoriaMB.listaAuditoria.size()} registros encontrados"
+                             rowsPerPageTemplate="15,30,45">
+                    <f:facet name="header">
+                        <h:outputText value="Auditoria" />
+                    </f:facet>
+
+                    <p:column sortBy="#{n.dataAcao}">
+                        <f:facet name="header">
+                            <h:outputText value="Data" />
+                        </f:facet>
+                        <h:outputText value="#{n.dataAcao}" id="data">
+                             <f:convertDateTime pattern="dd/MM/yyyy - hh:mm:ss"/>
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column sortBy="#{n.username}">
+                        <f:facet name="header">
+                            <h:outputText value="Usuário" />
+                        </f:facet>
+                        <h:outputText value="#{n.username}" id="usuario" />
+                    </p:column>
+
+                    <p:column sortBy="#{n.modulo}">
+                        <f:facet name="header">
+                            <h:outputText value="Modulo" />
+                        </f:facet>
+                        <h:outputText value="#{n.modulo}" id="modulo" />
+                    </p:column>
+
+                    <p:column sortBy="#{n.acao}">
+                        <f:facet name="header">
+                            <h:outputText value="Ação" />
+                        </f:facet>
+                        <h:outputText value="#{n.acao}" id="acao" />
+                    </p:column>
+
+                </p:dataTable>
+
+            </h:form>
+
+        </ui:define>
+    </ui:composition>
+</html>

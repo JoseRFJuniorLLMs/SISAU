@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <h:head>
+        <link type="text/css" rel="stylesheet" href="#{request.contextPath}/css/application.css"/>
+        <script type="text/javascript"  language="JavaScript" src="#{request.contextPath}/javascript/CloseListener.js"></script>
+    </h:head>
+    <h:body>
+        <f:view contentType="text/html" locale="#{i18nMB.currentLocale}">
+            <p:growl id="growl" showDetail="true" life="2000"/>
+            <p:ajaxStatus onstart="wait.show();" oncomplete="wait.hide();"/>
+
+            <p:panel>
+                <ui:insert name="topo">
+                    <ui:include src="menu.xhtml"/>
+                </ui:insert>
+                <ui:insert name="esquerda"></ui:insert>
+                <ui:insert name="conteudo"></ui:insert>
+                <ui:insert name="direita"></ui:insert>
+            </p:panel>
+
+            <p:dialog widgetVar="wait" width="180" height="100" header="Processando" resizable="false" draggable="false" closable="false">
+                <h:panelGrid columns="1" style="text-align: center" width="100%">
+                    <h:outputText value="Por favor aguarde..." style="text-align: center"/>
+                    <h:graphicImage value="/images/icons/wait.gif" style="text-align: center"/>
+                </h:panelGrid>
+            </p:dialog>
+            
+            <ui:include src="creditos.xhtml"/>
+            
+        </f:view>
+    </h:body>
+</html>
