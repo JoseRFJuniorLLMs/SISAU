@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui" 
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    
+    <ui:composition template="./layout.xhtml">
+        <ui:define name="esquerda">
+            <br/>
+        </ui:define>
+        <ui:define name="conteudo">
+            
+            <h:form id="form1">
+                 <p:panel header="#{msgs.form_find}">
+                    <h:panelGrid columns="6">
+                        <h:outputText value="Palavra Chave" />
+
+                        <p:keyboard id="pes" value="#{parceiroManagedBean.pesquisa }"
+                                    showMode="button" buttonImageOnly="true"
+                                    buttonImage="/images/keyboardpencil.png"> 
+
+                            <f:ajax event="keyup" render="tabela" listener="#{medicoMB.pesquisarMedicos}"/>
+                            <p:tooltip for="pes" value="PESQUISAR POR NOME OU LOGIN"
+                                       showEvent="focus" hideEvent="blur" showEffect="blind" hideEffect="explode" />
+                        </p:keyboard>
+                        <h:commandLink id="downloadlinkPdf" title="Download PDF">
+                            <p:graphicImage value="/images/icons/application_pdf.png" style="border:0"/>
+                            <p:fileDownload value="#{parceiroMB.downloadReportPdf()}" />
+                        </h:commandLink>
+                    </h:panelGrid>
+                </p:panel>
+                
+                
+                <p:dataTable id="tabela"
+                             value="#{parceiroMB.listaParceiros}"
+                             var="n"
+                             rows="10"
+                             paginatorPosition="bottom"
+                             paginator="true"
+                             rendered="true"
+                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}  Total de 
+                             #{parceiroMB.listaParceiros.size()} registros encontrados"
+                             rowsPerPageTemplate="5,10,15">
+                    <f:facet name="header">
+                        <h:outputText value="Usuarios do sistema" />
+                    </f:facet>
+                                        
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Tipo" />
+                        </f:facet>
+                        <h:outputText value="#{n.tipoParceiro}"/>
+                    </p:column>
+                    
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Ação" />
+                        </f:facet>
+                        
+                       <p:commandLink id="editlink" oncomplete="addEditPopup.show();" 
+                                      update=":addEditPanel" action="#{parceiroMB.prepareEditar}" immediate="true">
+                            <p:graphicImage value="/images/icons/edit.png" style="border:0"/>
+                            <f:setPropertyActionListener value="#{n}" target="#{parceiroMB.parceiros}" />
+                        </p:commandLink>
+                        <p:tooltip for="editlink" value="Editar" />
+                        
+                    <p:commandLink id="deletelink" oncomplete="deletePopup.show()">
+                            <p:graphicImage value="/images/icons/del.png" style="border:0"/>
+                            <f:setPropertyActionListener value="#{n}" target="#{parceiroMB.parceiros}" />
+                        </p:commandLink>
+                        <p:tooltip for="deletelink" value="Excluir" />
+                    </p:column>
+                    
+                    <f:facet name="footer">
+                        <p:columnGroup>
+                            <p:column colspan="1"/>
+                            <p:column>
+                                <p:commandLink id="addlink" oncomplete="addEditPopup.show()" update=":addEditPanel" 
+                                               action="#{parceiroMB.prepareAdicionar}" immediate="true">
+                                    <p:graphicImage value="/images/icons/add1.png" style="border:0"/>
+                                </p:commandLink>
+                                <p:tooltip for="addlink" value="Adicionar" />
+                            </p:column>
+                        </p:columnGroup>
+                    </f:facet> 
+                    
+                </p:dataTable>
+                
+                
+                 <h:panelGrid columns="6">
+                    <p:panel header="Exportar Todos">  
+                        <h:commandLink>  
+                            <p:graphicImage value="/images/excel.png" />  
+                            <p:dataExporter type="xls" target="tabela" fileName="parceiros" />  
+                        </h:commandLink>  
+
+                        <h:commandLink>  
+                            <p:graphicImage value="/images/pdf.png" />  
+                            <p:dataExporter type="pdf" target="tabela" fileName="parceiros"/>  
+                        </h:commandLink>  
+
+                        <h:commandLink>  
+                            <p:graphicImage value="/images/csv.png" />  
+                            <p:dataExporter type="csv" target="tabela" fileName="parceiros" />  
+                        </h:commandLink>  
+
+                        <h:commandLink>  
+                            <p:graphicImage value="/images/xml.png" />  
+                            <p:dataExporter type="xml" target="tabela" fileName="parceiros" />  
+                        </h:commandLink>  
+                    </p:panel>     
+                    <p:panel header="Exportar Página">  
+                        <h:commandLink>  
+                            <p:graphicImage value="/images/excel.png" />  
+                            <p:dataExporter type="xls" target="tabela" fileName="parceiros" pageOnly="true"/>  
+                        </h:commandLink>  
+
+                        <h:commandLink>  
+                            <p:graphicImage value="/images/pdf.png" />  
+                            <p:dataExporter type="pdf" target="tabela" fileName="parceiros" pageOnly="true"/>  
+                        </h:commandLink>  
+
+                        <h:commandLink>  
+                            <p:graphicImage value="/images/csv.png" />  
+                            <p:dataExporter type="csv" target="tabela" fileName="parceiros" pageOnly="true"/>  
+                        </h:commandLink>  
+
+                        <h:commandLink>  
+                            <p:graphicImage value="/images/xml.png" />  
+                            <p:dataExporter type="xml" target="tabela" fileName="parceiros" pageOnly="true"/>  
+                        </h:commandLink>  
+                    </p:panel>
+                </h:panelGrid>
+                  
+            </h:form>
+            
+            <!-- ################################### -->
+            <!-- bloco de edição -->
+            <p:hotkey bind="esc" handler="addEditPopup.hide()"></p:hotkey>
+            <p:dialog widgetVar="addEditPopup"
+                      width="900"
+                      height="400"
+                      header="Cadastrar/Editar"
+                      modal="true"
+                      resizable="false"
+                      draggable="false">
+                
+                <h:panelGrid columns="1" id="addEditPanel">
+                    <h:form>
+            
+                        <h:panelGrid columns="6">
+                            
+                            
+
+                            <h:outputText value="Tipo"/>
+                            <p:inputText value="#{parceiroMB.parceiros.tipoParceiro}" size="20" id="tipo" />
+                            <p:message for="tipo" display="icon"/>
+                            
+                            
+                            
+                        </h:panelGrid>
+
+                        <p:commandButton value="Gravar" actionListener="#{parceiroMB.gravar}"
+                                         update=":form1:tabela, :addEditPanel"
+                                         oncomplete="handleLocalesDialogComplete(xhr, status, args, addEditPopup)"/>
+                        <p:commandButton value="Cancelar"
+                                         onclick="addEditPopup.hide();return false;" />
+                    </h:form>
+                </h:panelGrid>
+            </p:dialog>
+
+            <!-- ################################### -->
+            
+            <!-- ################################### -->
+            <!-- bloco de Visualização -->
+            <p:dialog widgetVar="ViewPopup"
+                      width="900"
+                      height="400"
+                      header="Visualizar"
+                      modal="true"
+                      resizable="false"
+                      draggable="false">
+                <h:panelGrid columns="1" id="ViewPanel">
+                    <h:form>
+                        <h:panelGrid columns="6">
+
+                            
+
+
+                            <h:outputText value="Tipo"/>
+                            <p:inputText value="#{parceiroMB.parceiros.tipoParceiro}" id="tipo" disabled="true"/>
+                            <p:message for="tipo" display="icon"/>
+
+                        </h:panelGrid>
+                    </h:form>
+                </h:panelGrid>
+            </p:dialog>
+
+            <!-- ################################### -->
+            
+            
+            <!-- ################################### -->
+            <!-- bloco de exclusão -->
+            <p:dialog widgetVar="deletePopup" width="250" modal="true" header="Excluir" resizable="false">
+                <h:form>
+                    <h:outputText value="Deseja Excluir?"/>
+                    <h:panelGrid columns="2">
+                        <p:commandButton value="Sim"
+                                         action="#{parceiroMB.excluir}"
+                                         oncomplete="deletePopup.hide();"
+                                         update=":form1:tabela"/>
+
+                        <p:commandButton value="Cancelar"
+                                         onclick="deletePopup.hide();return false;" />
+                    </h:panelGrid>
+
+                </h:form>
+            </p:dialog>
+            
+        </ui:define>
+    </ui:composition>
+   </html>

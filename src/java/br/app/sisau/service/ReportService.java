@@ -1,6 +1,7 @@
 package br.app.sisau.service;
 
 import br.app.sisau.beans.MedicosBean;
+import br.app.sisau.beans.ParceirosBean;
 import br.app.sisau.beans.PessoaBean;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -97,6 +98,10 @@ public class ReportService {
     }
 
     private InputStream emiteRelatorio(List<MedicosBean> listaMedicos, String listaPessoasjasper, Map parametros) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    public InputStream emiteRelatorioParceiros(List<ParceirosBean> listaParceiros, int FORMATO_PDF) {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 }

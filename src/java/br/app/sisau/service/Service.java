@@ -4,6 +4,7 @@ import br.app.sisau.beans.*;
 import br.app.sisau.daos.AuditoriaJpaDao;
 import br.app.sisau.daos.EspecialidadeJpaDao;
 import br.app.sisau.daos.MedicoJpaDao;
+import br.app.sisau.daos.ParceiroJpaDao;
 import br.app.sisau.daos.PessoaJpaDao;
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -101,7 +102,7 @@ public class Service {
         return new PessoaJpaDao().findEntities();
         //return new PessoaJpaDao().pesquisar();
     }
- 
+
     public PessoaBean pesquisarPessoaEmail(String email) throws Exception {
         return new PessoaJpaDao().findByEmail(email);
     }
@@ -109,60 +110,97 @@ public class Service {
     public List<PessoaBean> pesquisarPessoaCriteria(String termoPesquisa) {
         return new PessoaJpaDao().pesquisarCriteria(termoPesquisa);
     }
-   
-    public void cadastrarPessoa(PessoaBean pessoa){       
+
+    public void cadastrarPessoa(PessoaBean pessoa) {
         new PessoaJpaDao().create(pessoa);
     }
 
-    public void atualizarPessoa(PessoaBean pessoa){
+    public void atualizarPessoa(PessoaBean pessoa) {
         new PessoaJpaDao().update(pessoa);
     }
 
-    public void excluirPessoa(PessoaBean pessoa){
+    public void excluirPessoa(PessoaBean pessoa) {
         new PessoaJpaDao().delete(pessoa);
     }
-    
-    public List<AuditoriaBeanBean> listarAuditorias(){
+
+    public List<AuditoriaBeanBean> listarAuditorias() {
         return new AuditoriaJpaDao().findEntities();
     }
 
     public List<PessoaBean> pesquisarPessoas(String termoPesquisa) {
         return new PessoaJpaDao().pesquisar(termoPesquisa);
     }
-    
+
     public List<PessoaBean> pesquisarPessoas() {
         return new PessoaJpaDao().pesquisar();
     }
- 
+
     public PessoaBean pesquisarPessoa(PessoaBean pessoa) {
         return new PessoaJpaDao().findEntity(pessoa.getIdPessoa());
     }
-   //MÉDICOS  - Junior 24/09/2012
+    //MÉDICOS  - Junior 24/09/2012
+
     public List<MedicosBean> listarMerdicos() {
-      return new MedicoJpaDao().findEntities();  
+        return new MedicoJpaDao().findEntities();
     }
+
     public List<MedicosBean> pesquisarMedicosCriteria(String termoPesquisa) {
-         return new MedicoJpaDao().pesquisarCriteria(termoPesquisa);
+        return new MedicoJpaDao().pesquisarCriteria(termoPesquisa);
     }
+
     public List<MedicosBean> pesquisarMedicos(String termoPesquisa) {
         return new MedicoJpaDao().pesquisar(termoPesquisa);
     }
+
     public MedicosBean pesquisarMedicos(MedicosBean medicos) {
         return new MedicoJpaDao().findEntity(medicos.getPkMedico());
     }
-     public void cadastrarMedicos(MedicosBean medicos){       
+
+    public void cadastrarMedicos(MedicosBean medicos) {
         new MedicoJpaDao().create(medicos);
     }
-    public void atualizarMedicos(MedicosBean medicos){
+
+    public void atualizarMedicos(MedicosBean medicos) {
         new MedicoJpaDao().update(medicos);
     }
-    public void excluirMedicos(MedicosBean medicos){
+
+    public void excluirMedicos(MedicosBean medicos) {
         new MedicoJpaDao().delete(medicos);
     }
-     public List<EspecialidadesBean> listaEspecialidade() {
+
+    public List<EspecialidadesBean> listaEspecialidade() {
 //        List<EspecialidadesBean> listaEspecialidade = new ArrayList<EspecialidadesBean>();
 //        listaEspecialidade = new EspecialidadeJpaDao().findEntities();
         return new EspecialidadeJpaDao().findEntities();
 //        return listaEspecialidade();
     }
-  }
+
+    // Parceiros Ewerton
+    public List<ParceirosBean> listarParceiros() {
+        return new ParceiroJpaDao().findEntities();
+    }
+
+    public List<ParceirosBean> pesquisarParceirosCriteria(String termoPesquisa) {
+        return new ParceiroJpaDao().pesquisarCriteria(termoPesquisa);
+    }
+
+    public List<ParceirosBean> pesquisarParceiros(String termoPesquisa) {
+        return new ParceiroJpaDao().pesquisar(termoPesquisa);
+    }
+
+    public ParceirosBean pesquisarParceiros(ParceirosBean parceiros) {
+        return new ParceiroJpaDao().findEntity(parceiros.getPkParceiros());
+    }
+
+    public void cadastrarParceiros(ParceirosBean parceiros) {
+        new ParceiroJpaDao().create(parceiros);
+    }
+
+    public void atualizarParceiros(ParceirosBean parceiros) {
+        new ParceiroJpaDao().update(parceiros);
+    }
+
+    public void excluirParceiros(ParceirosBean parceiros) {
+        new ParceiroJpaDao().delete(parceiros);
+    }
+}
