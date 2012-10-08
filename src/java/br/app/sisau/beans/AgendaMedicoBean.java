@@ -24,12 +24,15 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "AgendaMedicoBean.findByStatus", query = "SELECT a FROM AgendaMedicoBean a WHERE a.status = :status")})
 public class AgendaMedicoBean implements Serializable {
     private static final long serialVersionUID = 1L;
+    
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
+    @SequenceGenerator(name = "pkAgenda", sequenceName = "agenda_medico_pk_agenda_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "pkAgenda")
     @Column(name = "pk_agenda", nullable = false)
     private Long pkAgenda;
+   
+     
     @Column(name = "data_marcacao")
     @Temporal(TemporalType.DATE)
     private Date dataMarcacao;
