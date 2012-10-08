@@ -22,12 +22,15 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "ParceirosBean.findByTipoParceiro", query = "SELECT p FROM ParceirosBean p WHERE p.tipoParceiro = :tipoParceiro")})
 public class ParceirosBean implements Serializable {
     private static final long serialVersionUID = 1L;
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
+    @SequenceGenerator(name = "pkParceiros", sequenceName = "parceiros_pk_parceiros_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "pkParceiros")
     @Column(name = "pk_parceiros", nullable = false)
     private Long pkParceiros;
+    
+    
     @Size(max = 50)
     @Column(name = "parceiro", length = 50)
     private String parceiro;
