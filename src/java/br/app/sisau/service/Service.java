@@ -1,11 +1,7 @@
 package br.app.sisau.service;
 
 import br.app.sisau.beans.*;
-import br.app.sisau.daos.AuditoriaJpaDao;
-import br.app.sisau.daos.EspecialidadeJpaDao;
-import br.app.sisau.daos.MedicoJpaDao;
-import br.app.sisau.daos.ParceiroJpaDao;
-import br.app.sisau.daos.PessoaJpaDao;
+import br.app.sisau.daos.*;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -138,12 +134,16 @@ public class Service {
     public PessoaBean pesquisarPessoa(PessoaBean pessoa) {
         return new PessoaJpaDao().findEntity(pessoa.getIdPessoa());
     }
-    //MÉDICOS  - Junior 24/09/2012
+    //==========================================================================================//
+    
+                            //MÉDICOS  - Junior 24/09/2012
+    
+    //=========================================================================================//
 
-    public List<MedicosBean> listarMerdicos() {
+    public List<MedicosBean> listarMedicos() {
         return new MedicoJpaDao().findEntities();
     }
-
+    
     public List<MedicosBean> pesquisarMedicosCriteria(String termoPesquisa) {
         return new MedicoJpaDao().pesquisarCriteria(termoPesquisa);
     }
@@ -169,12 +169,46 @@ public class Service {
     }
 
     public List<EspecialidadesBean> listaEspecialidade() {
-//        List<EspecialidadesBean> listaEspecialidade = new ArrayList<EspecialidadesBean>();
-//        listaEspecialidade = new EspecialidadeJpaDao().findEntities();
         return new EspecialidadeJpaDao().findEntities();
-//        return listaEspecialidade();
+    }
+   //==========================================================================================//
+    
+                            //OBITOS  - Junior 08/10/2012
+    
+    //=========================================================================================//
+    public List<ObitosBean> listarObitos() {
+        return new ObitoJpaDao().findEntities();
     }
 
+    public List<ObitosBean> pesquisarObitosCriteria(String termoPesquisa) {
+        return new ObitoJpaDao().pesquisarCriteria(termoPesquisa);
+    }
+
+    public List<ObitosBean> pesquisarObitos(String termoPesquisa) {
+        return new ObitoJpaDao().pesquisar(termoPesquisa);
+    }
+
+    public ObitosBean pesquisarObitos(ObitosBean obitos) {
+        return new ObitoJpaDao().findEntity(obitos.getPkObitos());
+    }
+
+    public void cadastrarObitos(ObitosBean obitos) {
+        new ObitoJpaDao().create(obitos);
+    }
+
+    public void atualizarObitos(ObitosBean obitos) {
+        new ObitoJpaDao().update(obitos);
+    }
+
+    public void excluirObitos(ObitosBean obitos) {
+        new ObitoJpaDao().delete(obitos);
+    }
+
+//    public List<EspecialidadesBean> listaEspecialidade() {
+//        return new EspecialidadeJpaDao().findEntities();
+//    }
+    
+    
     // Parceiros Ewerton
     public List<ParceirosBean> listarParceiros() {
         return new ParceiroJpaDao().findEntities();
@@ -203,4 +237,6 @@ public class Service {
     public void excluirParceiros(ParceirosBean parceiros) {
         new ParceiroJpaDao().delete(parceiros);
     }
+
+    
 }
