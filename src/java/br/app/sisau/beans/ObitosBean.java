@@ -21,12 +21,14 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "ObitosBean.findByData", query = "SELECT o FROM ObitosBean o WHERE o.data = :data")})
 public class ObitosBean implements Serializable {
     private static final long serialVersionUID = 1L;
+   
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
+    @SequenceGenerator(name = "pkObitos", sequenceName = "obitos_pk_obitos_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "pkObitos")
     @Column(name = "pk_obitos", nullable = false)
     private Long pkObitos;
+     
     @Size(max = 50)
     @Column(name = "causa", length = 50)
     private String causa;
