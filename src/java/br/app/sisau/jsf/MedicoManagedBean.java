@@ -83,7 +83,7 @@ public class MedicoManagedBean implements Serializable {
         //COMBO especialidade
         setListaEspecialidade(Service.getInstance().listaEspecialidade());
         for (EspecialidadesBean sec : listaEspecialidade){
-            this.getListaEspecialidadeItems().add(new SelectItem(sec.getPkEspecialidade(),sec.getEspecialidade()));
+            listaEspecialidadeItems.add(new SelectItem(sec.getPkEspecialidade(),sec.getEspecialidade()));
         }
     }
 
@@ -297,5 +297,24 @@ public class MedicoManagedBean implements Serializable {
 
     public void setEspecialidade(EspecialidadesBean especialidade) {
         this.especialidade = especialidade;
+    }
+
+    public int getIdEspetcialidadeSelecionada() {
+        return idEspetcialidadeSelecionada;
+    }
+
+    public void setIdEspetcialidadeSelecionada(int idEspetcialidadeSelecionada) {
+        this.idEspetcialidadeSelecionada = idEspetcialidadeSelecionada;
+    }
+    
+    public void especSelec(){
+        logger.debug("Validando combo.....");
+        EspecialidadesBean espec = new EspecialidadesBean();
+        espec.setPkEspecialidade(idEspetcialidadeSelecionada);
+        if(listaEspecialidade.contains(espec)){
+            int index = listaEspecialidade.indexOf(espec);
+            especialidade = listaEspecialidade.get(index);
+            medicos.setFkEspecialidade(especialidade);
+        }
     }
 }

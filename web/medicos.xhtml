@@ -58,28 +58,28 @@
                         </f:facet>
                         <h:outputText value="#{n.crm}"/>
                     </p:column>
-                    
+
                     <p:column>
                         <f:facet name="header">
                             <h:outputText value="Especialidade" />
                         </f:facet>
                         <h:outputText value="#{n.fkEspecialidade}"/>
                     </p:column>
-                 
+
                     <p:column>
                         <f:facet name="header">
                             <h:outputText value="Ação" />
                         </f:facet>
-                        
-                       <p:commandLink id="editlink" oncomplete="addEditPopup.show();" 
+
+                        <p:commandLink id="editlink" oncomplete="addEditPopup.show();" 
                                        update=":addEditPanel" action="#{medicoMB.prepareEditar}" immediate="true">
                             <p:graphicImage value="/images/icons/edit.png" style="border:0"/>
                             <f:setPropertyActionListener value="#{n}" target="#{medicoMB.medicos}" />
                         </p:commandLink>
                         <p:tooltip for="editlink" value="Editar" />
 
-                        
-                    <p:commandLink id="deletelink" oncomplete="deletePopup.show()">
+
+                        <p:commandLink id="deletelink" oncomplete="deletePopup.show()">
                             <p:graphicImage value="/images/icons/del.png" style="border:0"/>
                             <f:setPropertyActionListener value="#{n}" target="#{medicoMB.medicos}" />
                         </p:commandLink>
@@ -155,12 +155,12 @@
                       modal="true"
                       resizable="false"
                       draggable="false">
-                
+
                 <h:panelGrid columns="1" id="addEditPanel">
                     <h:form>
-            
+
                         <h:panelGrid columns="6">
-                            
+
                             <h:outputText value="Nome:" />
                             <p:inputText value="#{medicoMB.medicos.nome}" size="40" id="nome" required="true" requiredMessage="Campo Obrigatório."/>
                             <p:message for="nome" display="icon"/>
@@ -168,17 +168,18 @@
                             <h:outputText value="CRM"/>
                             <p:inputText value="#{medicoMB.medicos.crm}" size="20" id="crm" />
                             <p:message for="crm" display="icon"/>
-                            
+
                             <h:outputText value="Data Nascimento"/>
                             <p:calendar value="#{medicoMB.medicos.dataNascimento}" size="20" id="dnascimento" />
                             <p:message for="dnascimento" display="icon"/>
-                             
+
                             <h:outputText value="Especialidade"/>
-                            <h:selectOneMenu value = "#{medicoMB.medicos.fkEspecialidade}" >  
-                            <f:selectItem itemLabel = "SELECIONE" itemValue="" />   
-                            <f:selectItems value="#{medicoMB.listaEspecialidadeItems}"/>   
-                            </h:selectOneMenu> 
-                            
+                            <p:selectOneMenu value = "#{medicoMB.idEspetcialidadeSelecionada}" required="true">  
+                                <f:selectItem itemLabel = "SELECIONE" itemValue="" />   
+                                <f:selectItems value="#{medicoMB.listaEspecialidadeItems}"/>
+                                <f:ajax event="valueChange" listener="#{medicoMB.especSelec}"/>                            
+                            </p:selectOneMenu> 
+
                         </h:panelGrid>
 
                         <p:commandButton value="Gravar" actionListener="#{medicoMB.gravar}"

@@ -26,7 +26,7 @@ public class EspecialidadesBean implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "pk_especialidade", nullable = false)
-    private Long pkEspecialidade;
+    private int pkEspecialidade;
     
     @Size(max = 50)
     @Column(name = "especialidade", length = 50)
@@ -44,15 +44,15 @@ public class EspecialidadesBean implements Serializable {
     public EspecialidadesBean() {
     }
 
-    public EspecialidadesBean(Long pkEspecialidade) {
+    public EspecialidadesBean(int pkEspecialidade) {
         this.pkEspecialidade = pkEspecialidade;
     }
 
-    public Long getPkEspecialidade() {
+    public int getPkEspecialidade() {
         return pkEspecialidade;
     }
 
-    public void setPkEspecialidade(Long pkEspecialidade) {
+    public void setPkEspecialidade(int pkEspecialidade) {
         this.pkEspecialidade = pkEspecialidade;
     }
 
@@ -93,19 +93,21 @@ public class EspecialidadesBean implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (pkEspecialidade != null ? pkEspecialidade.hashCode() : 0);
+        int hash = 7;
+        hash = 47 * hash + this.pkEspecialidade;
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof EspecialidadesBean)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        EspecialidadesBean other = (EspecialidadesBean) object;
-        if ((this.pkEspecialidade == null && other.pkEspecialidade != null) || (this.pkEspecialidade != null && !this.pkEspecialidade.equals(other.pkEspecialidade))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final EspecialidadesBean other = (EspecialidadesBean) obj;
+        if (this.pkEspecialidade != other.pkEspecialidade) {
             return false;
         }
         return true;
