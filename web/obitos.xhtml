@@ -17,30 +17,30 @@
                     <h:panelGrid columns="6">
                         <h:outputText value="Palavra Chave" />
 
-                        <p:keyboard id="pes" value="#{obitosMB.pesquisa}"
+                        <p:keyboard id="pes" value="#{obitoMB.pesquisa}"
                                     showMode="button" buttonImageOnly="true"
                                     buttonImage="/images/keyboardpencil.png"> 
 
-                            <f:ajax event="keyup" render="tabela" listener="#{obitosMB.pesquisarobitos}"/>
+                            <f:ajax event="keyup" render="tabela" listener="#{obitoMB.pesquisarObitos()}"/>
                             <p:tooltip for="pes" value="PESQUISAR POR NOME OU LOGIN"
                                        showEvent="focus" hideEvent="blur" showEffect="blind" hideEffect="explode" />
                         </p:keyboard>
                         <h:commandLink id="downloadlinkPdf" title="Download PDF">
                             <p:graphicImage value="/images/icons/application_pdf.png" style="border:0"/>
-                            <p:fileDownload value="#{obitosMB.downloadReportPdf()}" />
+                            <p:fileDownload value="#{obitoMB.downloadReportPdf()}" />
                         </h:commandLink>
                     </h:panelGrid>
                 </p:panel>
 
                 <p:dataTable id="tabela"
-                             value="#{obitosMB.listaobitos}"
+                             value="#{obitoMB.listaObitos}"
                              var="n"
                              rows="10"
                              paginatorPosition="bottom"
                              paginator="true"
                              rendered="true"
                              paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}  Total de 
-                             #{obitosMB.listaobitos.size()} registros encontrados"
+                             #{obitoMB.listaObitos.size()} registros encontrados"
                              rowsPerPageTemplate="5,10,15">
                     <f:facet name="header">
                         <h:outputText value="Usuarios do sistema" />
@@ -65,16 +65,16 @@
                         </f:facet>
 
                         <p:commandLink id="editlink" oncomplete="addEditPopup.show();" 
-                                       update=":addEditPanel" action="#{obitosMB.prepareEditar}" immediate="true">
+                                       update=":addEditPanel" action="#{obitoMB.prepareEditar}" immediate="true">
                             <p:graphicImage value="/images/icons/edit.png" style="border:0"/>
-                                    <f:setPropertyActionListener value="#{n}" target="#{obitosMB.obitos}" />
+                                    <f:setPropertyActionListener value="#{n}" target="#{obitoMB.obitos}" />
                         </p:commandLink>
                         <p:tooltip for="editlink" value="Editar" />
 
 
                         <p:commandLink id="deletelink" oncomplete="deletePopup.show()">
                             <p:graphicImage value="/images/icons/del.png" style="border:0"/>
-                            <f:setPropertyActionListener value="#{n}" target="#{obitosMB.obitos}" />
+                            <f:setPropertyActionListener value="#{n}" target="#{obitoMB.obitos}" />
                         </p:commandLink>
                         <p:tooltip for="deletelink" value="Excluir" />
                     </p:column>
@@ -84,7 +84,7 @@
                             <p:column colspan="1"/>
                             <p:column>
                                 <p:commandLink id="addlink" oncomplete="addEditPopup.show()" update=":addEditPanel" 
-                                               action="#{obitosMB.prepareAdicionar}" immediate="true">
+                                               action="#{obitoMB.prepareAdicionar}" immediate="true">
                                     <p:graphicImage value="/images/icons/add1.png" style="border:0"/>
                                 </p:commandLink>
                                 <p:tooltip for="addlink" value="Adicionar" />
@@ -155,8 +155,8 @@
                         <h:panelGrid columns="6">
 
                             <h:outputText value="Causa:" />
-                            <p:inputText value="#{obitoMB.obitos.causa}" size="40" id="causaobito" required="true" requiredMessage="Campo Obrigatório."/>
-                            <p:message for="causaobito" display="icon"/>
+                            <p:inputText value="#{obitoMB.obitos.causa}" size="40" id="causao" required="true" requiredMessage="Campo Obrigatório."/>
+                            <p:message for="causao" display="icon"/>
 
                             <h:outputText value="Data Obito"/>
                             <p:calendar value="#{obitoMB.obitos.data}" size="20" id="obito" />
@@ -165,7 +165,7 @@
 
                         </h:panelGrid>
 
-                        <p:commandButton value="Gravar" actionListener="#{obitosMB.gravar}"
+                        <p:commandButton value="Gravar" actionListener="#{obitoMB.gravar}"
                                          update=":form1:tabela, :addEditPanel"
                                          oncomplete="handleLocalesDialogComplete(xhr, status, args, addEditPopup)"/>
                         <p:commandButton value="Cancelar"
@@ -191,7 +191,7 @@
 
                             <h:outputText value="Causa:" />
                             <p:inputText value="#{obitoMB.obitos.causa}" size="40" id="ca" required="true" requiredMessage="Campo Obrigatório."/>
-                            <p:message for="causaobito" display="icon"/>
+                            <p:message for="ca" display="icon"/>
 
                             <h:outputText value="Data Obito"/>
                             <p:calendar value="#{obitoMB.obitos.data}" size="20" id="ob" />
@@ -209,7 +209,7 @@
                     <h:outputText value="Deseja Excluir?"/>
                     <h:panelGrid columns="2">
                         <p:commandButton value="Sim"
-                                         action="#{obitosMB.excluir}"
+                                         action="#{obitoMB.excluir}"
                                          oncomplete="deletePopup.hide();"
                                          update=":form1:tabela"/>
 
