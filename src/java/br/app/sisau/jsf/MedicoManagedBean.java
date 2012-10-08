@@ -73,7 +73,7 @@ public class MedicoManagedBean implements Serializable {
     @PostConstruct
     public void postConstruct() {
 
-        listaMedicos = Service.getInstance().listarMerdicos();
+        listaMedicos = Service.getInstance().listarMedicos();
         
         editarRegistrosTerceiros = SecurityService.getInstance().verificarPermissao(userSessionMB.getLoggedUser(), RbacConstantes.PESSOA_EDITAR_TERCEIROS);
         excluirRegistrosTerceiros = SecurityService.getInstance().verificarPermissao(userSessionMB.getLoggedUser(), RbacConstantes.PESSOA_EXCLUIR_TERCEIROS);
