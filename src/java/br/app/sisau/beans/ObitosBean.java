@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -32,6 +31,7 @@ public class ObitosBean implements Serializable {
     @Size(max = 50)
     @Column(name = "causa", length = 50)
     private String causa;
+    
     @Column(name = "data")
     @Temporal(TemporalType.TIMESTAMP)
     private Date data;
