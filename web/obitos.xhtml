@@ -45,25 +45,18 @@
                     <f:facet name="header">
                         <h:outputText value="Usuarios do sistema" />
                     </f:facet>
-                    <p:column sortBy="#{n.nome}">
+                    <p:column sortBy="#{n.causa}">
                         <f:facet name="header">
-                            <h:outputText value="Nome" />
+                            <h:outputText value="Causa" />
                         </f:facet>
-                        <h:outputText value="#{n.nome}" id="nome" />
+                        <h:outputText value="#{n.causa}" id="causa" />
                     </p:column>
 
                     <p:column>
                         <f:facet name="header">
-                            <h:outputText value="CRM" />
+                            <h:outputText value="Data" />
                         </f:facet>
-                        <h:outputText value="#{n.crm}"/>
-                    </p:column>
-
-                    <p:column>
-                        <f:facet name="header">
-                            <h:outputText value="Especialidade" />
-                        </f:facet>
-                        <h:outputText value="#{n.fkEspecialidade}"/>
+                        <h:outputText value="#{n.data}"/>
                     </p:column>
 
                     <p:column>
@@ -161,24 +154,14 @@
 
                         <h:panelGrid columns="6">
 
-                            <h:outputText value="Nome:" />
-                            <p:inputText value="#{obitosMB.obitos.nome}" size="40" id="nome" required="true" requiredMessage="Campo Obrigatório."/>
-                            <p:message for="nome" display="icon"/>
+                            <h:outputText value="Causa:" />
+                            <p:inputText value="#{obitoMB.obitos.causa}" size="40" id="causaobito" required="true" requiredMessage="Campo Obrigatório."/>
+                            <p:message for="causaobito" display="icon"/>
 
-                            <h:outputText value="CRM"/>
-                            <p:inputText value="#{obitosMB.obitos.crm}" size="20" id="crm" />
-                            <p:message for="crm" display="icon"/>
+                            <h:outputText value="Data Obito"/>
+                            <p:calendar value="#{obitoMB.obitos.data}" size="20" id="obito" />
+                            <p:message for="obito" display="icon"/>
 
-                            <h:outputText value="Data Nascimento"/>
-                            <p:calendar value="#{obitosMB.obitos.dataNascimento}" size="20" id="dnascimento" />
-                            <p:message for="dnascimento" display="icon"/>
-
-                            <h:outputText value="Especialidade"/>
-                            <p:selectOneMenu value = "#{obitosMB.idEspetcialidadeSelecionada}" required="true">  
-                                <f:selectItem itemLabel = "SELECIONE" itemValue="" />   
-                                <f:selectItems value="#{obitosMB.listaEspecialidadeItems}"/>
-                                <f:ajax event="valueChange" listener="#{obitosMB.especSelec}"/>                            
-                            </p:selectOneMenu> 
 
                         </h:panelGrid>
 
@@ -206,14 +189,13 @@
                     <h:form>
                         <h:panelGrid columns="6">
 
-                            <h:outputText value="Nome:" />
-                            <p:inputText value="#{obitosMB.obitos.nome}" size="40" id="nome" disabled="true"/>
-                            <p:message for="nome" display="icon"/> 
+                            <h:outputText value="Causa:" />
+                            <p:inputText value="#{obitoMB.obitos.causa}" size="40" id="ca" required="true" requiredMessage="Campo Obrigatório."/>
+                            <p:message for="causaobito" display="icon"/>
 
-
-                            <h:outputText value="CRM"/>
-                            <p:inputText value="#{obitosMB.obitos.crm}" id="crm" disabled="true"/>
-                            <p:message for="crm" display="icon"/>
+                            <h:outputText value="Data Obito"/>
+                            <p:calendar value="#{obitoMB.obitos.data}" size="20" id="ob" />
+                            <p:message for="ob" display="icon"/>
 
                         </h:panelGrid>
                     </h:form>
