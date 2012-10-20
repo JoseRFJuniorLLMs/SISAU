@@ -238,5 +238,41 @@ public class Service {
         new ParceiroJpaDao().delete(parceiros);
     }
 
+    //==========================================================================================//
     
+                            //Crianças  - Jonh Lennon 09/10/2012
+    
+    //=========================================================================================//
+
+    public List<CriancasBean> listarCriancas() {
+        return new CriancaJpaDao().findEntities();
+    }
+    
+    public List<CriancasBean> pesquisarCriancasCriteria(String termoPesquisa) {
+        return new CriancaJpaDao().pesquisarCriteria(termoPesquisa);
+    }
+
+    public List<CriancasBean> pesquisarCriancas(String termoPesquisa) {
+        return new CriancaJpaDao().pesquisar(termoPesquisa);
+    }
+
+    public CriancasBean pesquisarCriancas(CriancasBean criancas) {
+        return new CriancaJpaDao().findEntity(criancas.getPkCriancas());
+    }
+
+    public void cadastrarCriancas(CriancasBean criancas) {
+        new CriancaJpaDao().create(criancas);
+    }
+
+    public void atualizarCriancas(CriancasBean criancas) {
+        new CriancaJpaDao().update(criancas);
+    }
+
+    public void excluirCriancas(CriancasBean criancas) {
+        new CriancaJpaDao().delete(criancas);
+    }
+
+    public List<FamiliasBean> listaFamilia() {
+        return new FamiliaJpaDao().findEntities();
+    }    
 }

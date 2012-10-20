@@ -1,5 +1,6 @@
 package br.app.sisau.service;
 
+import br.app.sisau.beans.CriancasBean;
 import br.app.sisau.beans.MedicosBean;
 import br.app.sisau.beans.ObitosBean;
 import br.app.sisau.beans.ParceirosBean;
@@ -107,6 +108,12 @@ public class ReportService {
     }
 
     public InputStream emiteRelatorioObitos(List<ObitosBean> listaObitos, int FORMATO_PDF) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    //Jonh Lennon 11/10/2012
+    // adicionado emiteRelatorioCriancas
+    public InputStream emiteRelatorioCriancas(List<CriancasBean> listaCriancas, int FORMATO_PDF) {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 }

@@ -1,0 +1,259 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <ui:composition template="./layout.xhtml">
+        <ui:define name="esquerda"><br/></ui:define>
+        <ui:define name="conteudo">
+            <h:form id="form1">
+                <p:panel header="#{msgs.form_find}">
+                    <h:panelGrid columns="6">
+                        <h:outputText value="Palavra Chave"/>
+                        <p:keyboard id="pes" value="#{criancaMB.pesquisa}" showMode="button" buttonImageOnly="true" buttonImage="/images/keyboardpencil.png">
+                            <f:ajax event="keyup" render="tabela" listener="#{criancaMB.pesquisarCriancas}"/>
+                            <p:tooltip for="pes" value="PESQUISAR POR NOME OU LOGIN" showEvent="focus" hideEvent="blur" showEffect="blind" hideEffect="explode"/>
+                        </p:keyboard>
+                        <h:commandLink id="downloadlinkPdf" title="Download PDF">
+                            <p:graphicImage value="/images/icons/application_pdf.png" style="border:0"/>
+                            <p:fileDownload value="#{criancaMB.downloadReportPdf()}"/>
+                        </h:commandLink>
+                    </h:panelGrid>
+                </p:panel>
+                <p:dataTable id="tabela" value="#{criancaMB.listaCriancas}" var="n" rows="10" paginatorPosition="bottom" paginator="true" rendered="true"
+                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}  Total de
+                             #{criancaMB.listaCriancas.size()} registros encontrados" rowsPerPageTemplate="5,10,15">
+                    <f:facet name="header"><h:outputText value="Usuarios do sistema"/></f:facet>
+                    <p:column sortBy="#{n.dataNascimento}">
+                        <f:facet name="header"><h:outputText value="Data Nascimento"/></f:facet>
+                        <h:outputText value="#{n.dataNascimento}" id="dataNascimento"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Peso ao nascer"/>
+                        </f:facet>
+                        <h:outputText value="#{n.pesoNascer}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Tamanho ao nascer"/>
+                        </f:facet>
+                        <h:outputText value="#{n.tamnhoNascer}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header"><h:outputText value="Ação"/></f:facet>
+                        
+                        <p:commandLink id="Viewlink" oncomplete="ViewPopup.show();" 
+                                       update=":ViewPanel" action="#{criancaMB.prepareEditar}" immediate="true">
+                            <p:graphicImage value="/images/icons/detail.png" style="border:0"/>
+                            <f:setPropertyActionListener value="#{n}" target="#{criancaMB.criancas}"/>
+                        </p:commandLink>
+                        <p:tooltip for="Viewlink" value="Visualizar" />
+                        
+                        <p:commandLink id="editlink" oncomplete="addEditPopup.show();"
+                                       update=":addEditPanel" action="#{criancaMB.prepareEditar}" immediate="true">
+                            <p:graphicImage value="/images/icons/edit.png" style="border:0"/>
+                            <f:setPropertyActionListener value="#{n}" target="#{criancaMB.criancas}"/>
+                        </p:commandLink>
+                        <p:tooltip for="editlink" value="Editar"/>
+                        
+                        <p:commandLink id="deletelink" oncomplete="deletePopup.show()">
+                            <p:graphicImage value="/images/icons/del.png" style="border:0"/>
+                            <f:setPropertyActionListener value="#{n}" target="#{criancaMB.criancas}"/>
+                        </p:commandLink>
+                        <p:tooltip for="deletelink" value="Excluir"/>
+                    </p:column>
+                    <f:facet name="footer">
+                        <p:columnGroup>
+                            <p:column colspan="1"/>
+                            <p:column>
+                                <p:commandLink id="addlink" oncomplete="addEditPopup.show()" update=":addEditPanel"
+                                               action="#{criancaMB.prepareAdicionar}" immediate="true">
+                                    <p:graphicImage value="/images/icons/add1.png" style="border:0"/>
+                                </p:commandLink>
+                                <p:tooltip for="addlink" value="Adicionar"/>
+                            </p:column>
+                        </p:columnGroup>
+                    </f:facet>
+                </p:dataTable>
+                <h:panelGrid columns="6">
+                    <p:panel header="Exportar Todos">
+                        <h:commandLink>
+                            <p:graphicImage value="/images/excel.png"/>
+                            <p:dataExporter type="xls" target="tabela" fileName="criancas"/>
+                        </h:commandLink>
+                        <h:commandLink>
+                            <p:graphicImage value="/images/pdf.png"/>
+                            <p:dataExporter type="pdf" target="tabela" fileName="criancas"/>
+                        </h:commandLink>
+                        <h:commandLink>
+                            <p:graphicImage value="/images/csv.png"/>
+                            <p:dataExporter type="csv" target="tabela" fileName="criancas"/>
+                        </h:commandLink>
+                        <h:commandLink>
+                            <p:graphicImage value="/images/xml.png"/>
+                            <p:dataExporter type="xml" target="tabela" fileName="criancas"/>
+                        </h:commandLink>
+                    </p:panel>
+                    <p:panel header="Exportar Página">
+                        <h:commandLink>
+                            <p:graphicImage value="/images/excel.png"/>
+                            <p:dataExporter type="xls" target="tabela" fileName="criancas" pageOnly="true"/>
+                        </h:commandLink>
+                        <h:commandLink>
+                            <p:graphicImage value="/images/pdf.png"/>
+                            <p:dataExporter type="pdf" target="tabela" fileName="criancas" pageOnly="true"/>
+                        </h:commandLink>
+                        <h:commandLink>
+                            <p:graphicImage value="/images/csv.png"/>
+                            <p:dataExporter type="csv" target="tabela" fileName="criancas" pageOnly="true"/>
+                        </h:commandLink>
+                        <h:commandLink>
+                            <p:graphicImage value="/images/xml.png"/>
+                            <p:dataExporter type="xml" target="tabela" fileName="criancas" pageOnly="true"/>
+                        </h:commandLink>
+                    </p:panel>
+                </h:panelGrid>
+            </h:form>
+
+            <!-- ################################### -->
+            <!-- bloco de edição -->
+            <p:hotkey bind="esc" handler="addEditPopup.hide()"></p:hotkey>
+            <p:dialog widgetVar="addEditPopup"
+                      width="900"
+                      height="400"
+                      header="Cadastrar/Editar"
+                      modal="true"
+                      resizable="false"
+                      draggable="false">
+                <h:panelGrid columns="1" id="addEditPanel">
+                    <h:form>
+                        <h:panelGrid columns="6">
+                            <h:outputText value="Unidade frequencia"/>
+                            <p:inputText value="#{criancaMB.criancas.unidadeFrequencia}" size="40" id="unidadeFrequencia"/>
+                            <p:message for="unidadeFrequencia" display="icon"/>
+
+                            <h:outputText value="Recem-nascido"/>
+                            <p:inputText value="#{criancaMB.criancas.recemNascido}" size="40" id="recemNascido"/>
+                            <p:message for="recemNascido" display="icon"/>
+
+                            <h:outputText value="Data nascimento"/>
+                            <p:calendar value="#{criancaMB.criancas.dataNascimento}" size="20" id="dataNascimento"/>
+                            <p:message for="dataNascimento" display="icon"/>
+
+                            <h:outputText value="Duracao gestacao"/>
+                            <p:inputText value="#{criancaMB.criancas.duracaoGestao}" size="10" id="duracaoGestao"/>
+                            <p:message for="duracaoGestao" display="icon"/>
+
+                            <h:outputText value="Tipo parto"/>
+                            <p:inputText value="#{criancaMB.criancas.tipoParto}" size="40" id="tipoParto"/>
+                            <p:message for="tipoParto" display="icon"/>
+
+                            <h:outputText value="Tamanho ao nascer"/>
+                            <p:inputText value="#{criancaMB.criancas.tamnhoNascer}" size="10" id="tamnhoNascer"/>
+                            <p:message for="tamnhoNascer" display="icon"/>
+
+                            <h:outputText value="Peso ao nascer"/>
+                            <p:inputText value="#{criancaMB.criancas.pesoNascer}" size="10" id="pesoNascer"/>
+                            <p:message for="pesoNascer" display="icon"/>
+
+                            <h:outputText value="Comprimento ao nascer"/>
+                            <p:inputText value="#{criancaMB.criancas.comprimentoNascer}" size="10" id="comprimentoNascer"/>
+                            <p:message for="comprimentoNascer" display="icon"/>
+
+                            <h:outputText value="Tipagem sanguinea"/>
+                            <p:inputText value="#{criancaMB.criancas.tipagemSanguinea}" size="10" id="tipagemSanguinea"/>
+                            <p:message for="tipagemSanguinea" display="icon"/>
+
+                            <h:outputText value="Tipagem sanguinea mae"/>
+                            <p:inputText value="#{criancaMB.criancas.tipagemSanguineaMae}" size="10" id="tipagemSanguineaMae"/>
+                            <p:message for="tipagemSanguineaMae" display="icon"/>
+
+                            <h:outputText value="Teste do pesinho"/>
+                            <p:inputText value="#{criancaMB.criancas.testePesinho}" size="10" id="testePesinho"/>
+                            <p:message for="testePesinho" display="icon"/>
+
+                            <h:outputText value="Familia"/>
+                            <p:selectOneMenu value = "#{criancaMB.idFamiliaSelecionada}" required="true">
+                                <f:selectItem itemLabel = "SELECIONE" itemValue=""/>
+                                <f:selectItems value="#{criancaMB.listaFamiliaItems}"/>
+                                <f:ajax event="valueChange" listener="#{criancaMB.familSelec}"/>
+                            </p:selectOneMenu>
+                        </h:panelGrid>
+                        <p:commandButton value="Gravar" actionListener="#{criancaMB.gravar}"
+                                         update=":form1:tabela, :addEditPanel" oncomplete="handleLocalesDialogComplete(xhr, status, args, addEditPopup)"/>
+                        <p:commandButton value="Cancelar" onclick="addEditPopup.hide();return false;"/>
+                    </h:form>
+                </h:panelGrid>
+            </p:dialog>
+
+            <!-- ################################### -->
+
+            <!-- ################################### -->
+            <!-- bloco de Visualização -->
+            <p:dialog widgetVar="ViewPopup"
+                      width="900"
+                      height="400"
+                      header="Visualizar"
+                      modal="true"
+                      resizable="false"
+                      draggable="false">
+                <h:panelGrid columns="1" id="ViewPanel">
+                    <h:form>
+                        <h:panelGrid columns="6">
+                            <h:outputText value="Data nascimento"/>
+                            <p:inputText value="#{criancaMB.criancas.dataNascimento}" size="20" id="dataNascimento" disabled="true"/>
+                            <p:message for="dataNascimento" display="icon"/>
+
+                            <h:outputText value="Duracao gestacao"/>
+                            <p:inputText value="#{criancaMB.criancas.duracaoGestao}" size="10" id="duracaoGestao" disabled="true"/>
+                            <p:message for="duracaoGestao" display="icon"/>
+
+                            <h:outputText value="Tipo parto"/>
+                            <p:inputText value="#{criancaMB.criancas.tipoParto}" size="40" id="tipoParto" disabled="true"/>
+                            <p:message for="tipoParto" display="icon"/>
+
+                            <h:outputText value="Tamanho ao nascer"/>
+                            <p:inputText value="#{criancaMB.criancas.tamnhoNascer}" size="10" id="tamnhoNascer" disabled="true"/>
+                            <p:message for="tamnhoNascer" display="icon"/>
+
+                            <h:outputText value="Peso ao nascer"/>
+                            <p:inputText value="#{criancaMB.criancas.pesoNascer}" size="10" id="pesoNascer" disabled="true"/>
+                            <p:message for="pesoNascer" display="icon"/>
+
+                            <h:outputText value="Comprimento ao nascer"/>
+                            <p:inputText value="#{criancaMB.criancas.comprimentoNascer}" size="10" id="comprimentoNascer" disabled="true"/>
+                            <p:message for="comprimentoNascer" display="icon"/>
+
+                            <h:outputText value="Tipagem sanguinea"/>
+                            <p:inputText value="#{criancaMB.criancas.tipagemSanguinea}" size="10" id="tipagemSanguinea" disabled="true"/>
+                            <p:message for="tipagemSanguinea" display="icon"/>
+
+                            <h:outputText value="Tipagem sanguinea mae"/>
+                            <p:inputText value="#{criancaMB.criancas.tipagemSanguineaMae}" size="10" id="tipagemSanguineaMae" disabled="true"/>
+                            <p:message for="tipagemSanguineaMae" display="icon"/>
+
+                            <h:outputText value="Teste do pesinho"/>
+                            <p:inputText value="#{criancaMB.criancas.testePesinho}" size="10" id="testePesinho" disabled="true"/>
+                            <p:message for="testePesinho" display="icon"/>
+                        </h:panelGrid>
+                    </h:form>
+                </h:panelGrid>
+            </p:dialog>
+
+            <!-- ################################### -->
+            <!-- bloco de exclusão -->
+            <p:dialog widgetVar="deletePopup" width="250" modal="true" header="Excluir" resizable="false">
+                <h:form>
+                    <h:outputText value="Deseja Excluir?"/>
+                    <h:panelGrid columns="2">
+                        <p:commandButton value="Sim" action="#{criancaMB.excluir}" oncomplete="deletePopup.hide();" update=":form1:tabela"/>
+                        <p:commandButton value="Cancelar" onclick="deletePopup.hide();return false;"/>
+                    </h:panelGrid>
+                </h:form>
+            </p:dialog>
+        </ui:define>
+    </ui:composition>
+</html>
