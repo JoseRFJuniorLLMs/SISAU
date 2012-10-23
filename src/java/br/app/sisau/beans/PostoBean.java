@@ -16,13 +16,14 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "posto", catalog = "sisau", schema = "public")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "PostoBean.findAll", query = "SELECT p FROM PostoBean p"),
+    @NamedQuery(name = "PostoBean.findAll", query = "SELECT p FROM PostoBean p order by p.nome"),
     @NamedQuery(name = "PostoBean.findByPkPosto", query = "SELECT p FROM PostoBean p WHERE p.pkPosto = :pkPosto"),
-    @NamedQuery(name = "PostoBean.findByNome", query = "SELECT p FROM PostoBean p WHERE p.nome = :nome")})
+    @NamedQuery(name = "PostoBean.findByNome", query = "SELECT p FROM PostoBean p WHERE p.nome like :nome")})
 public class PostoBean implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "posto_pk_posto_seq")
+    @SequenceGenerator(name = "posto_pk_posto_seq", sequenceName = "posto_pk_posto_seq", allocationSize = 1)
     @Basic(optional = false)
     @NotNull
     @Column(name = "pk_posto", nullable = false)

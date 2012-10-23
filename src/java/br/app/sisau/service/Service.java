@@ -275,4 +275,25 @@ public class Service {
     public List<FamiliasBean> listaFamilia() {
         return new FamiliaJpaDao().findEntities();
     }    
+
+    //==========================================================================================//
+                            //Postos  - Paulo Gomes 22/10/2012
+    //=========================================================================================//
+
+    public void cadastrarPosto(PostoBean postoBean){
+        new PostoJpaDao().gravar(postoBean);
+    }
+    
+    public List<PostoBean> listaPostosTodos(){
+        return new PostoJpaDao().listaPostosTodos();
+    }
+    
+    public void excluirPosto(PostoBean posto){
+        new PostoJpaDao().excluirPosto(posto);
+    }
+
+    public List<PostoBean> pesquisaPosto(String nomePosto){
+        return new PostoJpaDao().pesquisarPosto(nomePosto);
+    }
+
 }

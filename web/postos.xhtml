@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui" 
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+    <ui:composition template="./layout.xhtml">
+        <ui:define name="esquerda">
+            <br/>
+        </ui:define>
+        <!-- Titulo da página -->
+        <ui:param name="pagina_titulo" value="Cadastro de Postos"/>
+        <ui:define name="conteudo">
+            <p:growl globalOnly="true" id="msgNotificacao"/>
+            <h:form id="form1">                
+                <p:panel header="#{msgs.form_find}">
+                    <h:outputText value="Palavra Chave" />&nbsp;
+                    <p:keyboard id="pes" value="#{postoMB.txtFiltroPesquisa}" showMode="button" buttonImageOnly="true" buttonImage="/images/keyboardpencil.png" >
+                        <f:ajax event="keyup" render=":formListagem" listener="#{postoMB.pesquisarPosto()}" />
+                    </p:keyboard>
+                </p:panel>                
+            </h:form>
+            
+            <!-- Popup de inlusão e edição -->
+            <p:dialog widgetVar="addEditPopup" width="400" height="150" header="Cadastrar/Editar"
+                      modal="true" resizable="false" draggable="false" closable="true">
+                <h:form id="formAdd">
+                    <h:panelGrid columns="1">
+                        <h:outputText value="Nome:" />
+                        <p:inputText value="#{postoMB.posto.nome}" size="50" maxlength="100" id="posto-nome" required="true"
+                                     requiredMessage="Obrigatório informar o nome do posto."/>
+                        <p:message for="posto-nome" />
+                        <h:panelGroup>
+                            <p:commandButton id="btnGravar" value="Gravar" actionListener="#{postoMB.gravar(action)}" oncomplete="handleLocalesDialogComplete(xhr, status, args, addEditPopup)"
+                                             update="formAdd :formListagem :msgNotificacao" />
+                            <p:commandButton id="btnCancelaGrava" value="Cancelar" actionListener="#{postoMB.limparPosto(action)}"
+                                             update="formAdd" oncomplete="addEditPopup.hide()" process="@this"/>
+                        </h:panelGroup>
+                    </h:panelGrid>
+                    <p:messages id="msg" globalOnly="true"/>
+                </h:form>
+            </p:dialog>
+            
+            <!-- listagem dos Postos -->
+            <h:form id="formListagem">
+                <p:dataTable id="tabela"
+                             value="#{postoMB.postos}"
+                             var="posto"
+                             rows="10"
+                             paginatorPosition="bottom"
+                             paginator="true"
+                             rendered="true"
+                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}  Total de 
+                             #{postoMB.postos.size()} registros encontrados"
+                             rowsPerPageTemplate="5,10,15"
+                             >
+                    <f:facet name="header">
+                        <h:outputText value="Postos Cadastrados" />
+                    </f:facet>
+
+                    <p:column sortBy="#{posto.nome}">
+                        <f:facet name="header">
+                            <h:outputText value="Nome" />
+                        </f:facet>
+                        <h:outputText value="#{posto.nome}" id="nome" />
+                    </p:column>
+                    
+                    <p:column width="50">
+                        <f:facet name="header">
+                            <h:outputText value="Ação" />
+                        </f:facet>
+                        <p:commandLink id="editlink" oncomplete="addEditPopup.show()" update=":formAdd" >
+                            <p:graphicImage value="/images/icons/edit.png" style="border:0"/>
+                            <f:setPropertyActionListener value="#{posto}" target="#{postoMB.posto}" />
+                        </p:commandLink>
+                        <p:tooltip for="editlink" value="Editar" />
+                        
+                        <p:commandLink id="deletelink" oncomplete="deletePopup.show()" update=":formDelete">
+                            <p:graphicImage value="/images/icons/del.png" style="border:0"/>
+                            <f:setPropertyActionListener value="#{posto}" target="#{postoMB.postoApagar}" />
+                        </p:commandLink>
+                        <p:tooltip for="deletelink" value="Excluir" />
+                    </p:column>
+
+                    <f:facet name="footer">
+                        <p:columnGroup>
+                            <p:column colspan="1"/>
+                            <p:column>
+                                <p:commandLink id="addlink" onclick="addEditPopup.show()" update=":formAdd">
+                                    <p:graphicImage value="/images/icons/add1.png" style="border:0" title="Adicionar novo posto" />
+                                </p:commandLink>
+                            </p:column>
+                        </p:columnGroup>
+                    </f:facet>                    
+                </p:dataTable>
+                
+                <!-- Exportação de Dados -->
+                <h:panelGrid columns="6">
+                    <p:panel header="Exportar Todos">  
+                        <h:commandLink>  
+                            <p:graphicImage value="/images/excel.png" />  
+                            <p:dataExporter type="xls" target="tabela" fileName="obitos" />  
+                        </h:commandLink>  
+
+                        <h:commandLink>  
+                            <p:graphicImage value="/images/pdf.png" />  
+                            <p:dataExporter type="pdf" target="tabela" fileName="obitos"/>  
+                        </h:commandLink>  
+
+                        <h:commandLink>  
+                            <p:graphicImage value="/images/csv.png" />  
+                            <p:dataExporter type="csv" target="tabela" fileName="obitos" />  
+                        </h:commandLink>  
+
+                        <h:commandLink>  
+                            <p:graphicImage value="/images/xml.png" />  
+                            <p:dataExporter type="xml" target="tabela" fileName="obitos" />  
+                        </h:commandLink>  
+                    </p:panel>     
+                    <p:panel header="Exportar Página">  
+                        <h:commandLink>  
+                            <p:graphicImage value="/images/excel.png" />  
+                            <p:dataExporter type="xls" target="tabela" fileName="obitos" pageOnly="true"/>  
+                        </h:commandLink>  
+
+                        <h:commandLink>  
+                            <p:graphicImage value="/images/pdf.png" />  
+                            <p:dataExporter type="pdf" target="tabela" fileName="obitos" pageOnly="true"/>  
+                        </h:commandLink>  
+
+                        <h:commandLink>  
+                            <p:graphicImage value="/images/csv.png" />  
+                            <p:dataExporter type="csv" target="tabela" fileName="obitos" pageOnly="true"/>  
+                        </h:commandLink>  
+
+                        <h:commandLink>  
+                            <p:graphicImage value="/images/xml.png" />  
+                            <p:dataExporter type="xml" target="tabela" fileName="obitos" pageOnly="true"/>  
+                        </h:commandLink>  
+                    </p:panel>
+                </h:panelGrid>   
+            </h:form>
+            
+            <!-- Popup de exclusão -->
+            <p:dialog widgetVar="deletePopup" width="250" modal="true" header="Excluir" resizable="false" >
+                <h:form id="formDelete">
+                    <h:outputText value="Deseja Excluir o Posto?"/><br />
+                    <h:outputText value="Nome: #{postoMB.postoApagar.nome}"/>
+                    <h:panelGrid columns="2">
+                        <p:commandButton value="Sim"
+                                         action="#{postoMB.excluir()}"
+                                         oncomplete="deletePopup.hide();"
+                                         update=":formListagem :msgNotificacao" />
+
+                        <p:commandButton value="Cancelar"
+                                         onclick="deletePopup.hide();return false;" />
+                    </h:panelGrid>
+
+                </h:form>
+            </p:dialog>
+            
+            
+        </ui:define>
+    </ui:composition>
+</html>
