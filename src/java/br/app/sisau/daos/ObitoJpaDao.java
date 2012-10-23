@@ -172,7 +172,7 @@ public List<ObitosBean> buscarTodos(){
     }
 
     public static void setLogger(Logger aLogger) {
-        logger = aLogger;
+        logPessoaogger;
     }
 
     public List<ObitosBean> getTodos() {
