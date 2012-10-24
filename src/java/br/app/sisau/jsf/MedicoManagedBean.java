@@ -17,6 +17,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionListener;
 import javax.faces.model.SelectItem;
 import org.apache.log4j.Logger;
 import org.primefaces.model.DefaultStreamedContent;
@@ -58,6 +59,10 @@ public class MedicoManagedBean implements Serializable {
     private EspecialidadesBean especialidade = new EspecialidadesBean();
     private List<SelectItem> listaEspecialidadeItems = new ArrayList<SelectItem>();
     private int idEspetcialidadeSelecionada;
+    
+    //PAULO
+    String mensagemProcessamento = "";
+    FacesMessage.Severity tipoMensagem = FacesMessage.SEVERITY_INFO;
     
     @ManagedProperty(value = "#{userSessionMB}")
     private UserSessionManagedBean userSessionMB;
@@ -103,8 +108,6 @@ public class MedicoManagedBean implements Serializable {
     public void prepareEditar() {
         this.setCurrentState(EDITAR_STATE);
         getListaMedicos().addAll(getListaMedicos());
-        logger.debug("MEDICO--->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + medicos);
-        logger.debug("CURRENTSTATES--->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" +currentState);
     }
     
      public void clear() {
@@ -115,26 +118,29 @@ public class MedicoManagedBean implements Serializable {
         logger.debug("==========Preparando==========");
         this.setCurrentState(ADICIONAR_STATE);
         medicos = new MedicosBean();
-        logger.debug("MEDICO--->>>>>>>>>>>>>>>>>>" + medicos);
-    
-//        this.clear();
-//        this.setCurrentState(ADICIONAR_STATE);
-//        
-        logger.debug("MEDICO--->>>>>>>>>>>>>>>>>>" + medicos);
-        logger.debug("CURRENTSTATES--->>>>>>>>>>>" +currentState);
     }
 
-    public void gravar() {
+    public void gravar(ActionListener action) {
         logger.debug("===========gravando...============");
-        //this.setCurrentState(ADICIONAR_STATE);
         if (ADICIONAR_STATE.equals(this.currentState)) {
-            logger.debug("========ADICIONAR REGISTRO"+currentState);
-            Service.getInstance().cadastrarMedicos(medicos);
-            logger.debug("========MEDICOS ADD"+medicos);
-            Service.getInstance().atualizarMedicos(medicos);
-            logger.debug("========MEDICOS UPDATE"+medicos);
-            AuditoriaService.getInstance().gravarAcaoUsuario(getUserSessionMB().getLoggedUser(), "CADASTRO DE MÉDICO", "CADASTRO DE MÉDICO", "CADASTRO DE MÉDICO");
+            try {
+                
+                Service.getInstance().cadastrarMedicos(medicos);
+                Service.getInstance().atualizarMedicos(medicos);
 
+                tipoMensagem = FacesMessage.SEVERITY_INFO;
+                mensagemProcessamento = "Médico Cadastrado Com sucesso !\n"+"NOME.:" + getMedicos().getNome()+"\n"+"CRM.:"+ getMedicos().getCrm();
+                AuditoriaService.getInstance().gravarAcaoUsuario(getUserSessionMB().getLoggedUser(), "CADASTRO DE MÉDICO", "CADASTRO DE MÉDICO", "CADASTRO DE MÉDICO");
+
+            } catch (Exception e) {
+                tipoMensagem = FacesMessage.SEVERITY_ERROR;
+                mensagemProcessamento = "Erro na Gravação do Médico: \n" + e.getMessage();
+
+            } finally {
+                FacesMessage message = new FacesMessage(tipoMensagem, mensagemProcessamento, null);
+                FacesContext.getCurrentInstance().addMessage(null, message);
+                mensagemProcessamento = "";
+            }
         } else if (EDITAR_STATE.equals(this.currentState)) {
             logger.debug("========EDITAR REGISTRO");
             Service.getInstance().atualizarMedicos(getMedicos());
@@ -143,12 +149,27 @@ public class MedicoManagedBean implements Serializable {
         }
         this.pesquisarMedicos();
     }
+
     public void excluir() {
+      try {  
         logger.debug("EXCLUIR REGISTRO");
+        
         Service.getInstance().excluirMedicos(getMedicos());
         this.pesquisarMedicos();
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("teste"));
-                    AuditoriaService.getInstance().gravarAcaoUsuario(getUserSessionMB().getLoggedUser(), "APGAR MÉDICO", "APAGAR MÉDICO", "APAGAR MÉDICO");
+      
+        tipoMensagem = FacesMessage.SEVERITY_INFO;
+        mensagemProcessamento = "Médico Excluido Com sucesso !\n"+"NOME.:" + getMedicos().getNome()+"\n"+"CRM.:"+ getMedicos().getCrm();
+        
+        AuditoriaService.getInstance().gravarAcaoUsuario(getUserSessionMB().getLoggedUser(), "APGAR MÉDICO", "APAGAR MÉDICO", "APAGAR MÉDICO");
+        
+      } catch (Exception e) {
+                tipoMensagem = FacesMessage.SEVERITY_ERROR;
+                mensagemProcessamento = "Erro na Apagar o Médico: \n" + e.getMessage();
+            } finally {
+                FacesMessage message = new FacesMessage(tipoMensagem, mensagemProcessamento, null);
+                FacesContext.getCurrentInstance().addMessage(null, message);
+                mensagemProcessamento = "";
+            }        
     }
 
     public StreamedContent downloadReportPdf() {
