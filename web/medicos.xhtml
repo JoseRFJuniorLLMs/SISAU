@@ -10,7 +10,7 @@
             <br/>
         </ui:define>
         <ui:define name="conteudo">
-
+        <p:growl globalOnly="true" id="msgNotificacao"/>
             <h:form id="form1">
 
                 <p:panel header="#{msgs.form_find}">
@@ -181,12 +181,17 @@
                             </p:selectOneMenu> 
 
                         </h:panelGrid>
+                        
+                         <p:commandButton id="btnGravar" value="Salvar Médico" actionListener="#{medicoMB.gravar(action)}"
+                                             oncomplete="handleLocalesDialogComplete(xhr, status, args, addEditPopup)"
+                                             update=":form1:tabela, :addEditPanel, :msgNotificacao"/>
 
-                        <p:commandButton value="Gravar" actionListener="#{medicoMB.gravar}"
-                                         update=":form1:tabela, :addEditPanel"
-                                         oncomplete="handleLocalesDialogComplete(xhr, status, args, addEditPopup)"/>
-                        <p:commandButton value="Cancelar"
+                        <p:commandButton value="Cancelar Cadastro"
                                          onclick="addEditPopup.hide();return false;" />
+                        
+                        <p:commandButton value="Agenda dos Médicos"
+                                         onclick="addEditPopup.hide();return false;" />
+
                     </h:form>
                 </h:panelGrid>
             </p:dialog>
@@ -223,14 +228,13 @@
             <!-- ################################### -->
             <!-- bloco de exclusão -->
             <p:dialog widgetVar="deletePopup" width="250" modal="true" header="Excluir" resizable="false">
-                <h:form>
-                    <h:outputText value="Deseja Excluir?"/>
+                <h:form >
+                    <h:outputText value="Deseja Excluir ?"/>
                     <h:panelGrid columns="2">
                         <p:commandButton value="Sim"
                                          action="#{medicoMB.excluir}"
                                          oncomplete="deletePopup.hide();"
-                                         update=":form1:tabela"/>
-
+                                         update=":form1:tabela, :msgNotificacao"/>
                         <p:commandButton value="Cancelar"
                                          onclick="deletePopup.hide();return false;" />
                     </h:panelGrid>
