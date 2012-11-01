@@ -32,33 +32,33 @@
                     </p:column>
                     <p:column>
                         <f:facet name="header">
-                            <h:outputText value="Peso ao nascer"/>
+                            <h:outputText value="Peso ao nascer(g)"/>
                         </f:facet>
                         <h:outputText value="#{n.pesoNascer}"/>
                     </p:column>
                     <p:column>
                         <f:facet name="header">
-                            <h:outputText value="Tamanho ao nascer"/>
+                            <h:outputText value="Tamanho ao nascer(cm)"/>
                         </f:facet>
                         <h:outputText value="#{n.tamnhoNascer}"/>
                     </p:column>
                     <p:column>
                         <f:facet name="header"><h:outputText value="Ação"/></f:facet>
-                        
-                        <p:commandLink id="Viewlink" oncomplete="ViewPopup.show();" 
+
+                        <p:commandLink id="Viewlink" oncomplete="ViewPopup.show();"
                                        update=":ViewPanel" action="#{criancaMB.prepareEditar}" immediate="true">
                             <p:graphicImage value="/images/icons/detail.png" style="border:0"/>
                             <f:setPropertyActionListener value="#{n}" target="#{criancaMB.criancas}"/>
                         </p:commandLink>
                         <p:tooltip for="Viewlink" value="Visualizar" />
-                        
+
                         <p:commandLink id="editlink" oncomplete="addEditPopup.show();"
                                        update=":addEditPanel" action="#{criancaMB.prepareEditar}" immediate="true">
                             <p:graphicImage value="/images/icons/edit.png" style="border:0"/>
                             <f:setPropertyActionListener value="#{n}" target="#{criancaMB.criancas}"/>
                         </p:commandLink>
                         <p:tooltip for="editlink" value="Editar"/>
-                        
+
                         <p:commandLink id="deletelink" oncomplete="deletePopup.show()">
                             <p:graphicImage value="/images/icons/del.png" style="border:0"/>
                             <f:setPropertyActionListener value="#{n}" target="#{criancaMB.criancas}"/>
@@ -124,7 +124,7 @@
             <p:dialog widgetVar="addEditPopup"
                       width="900"
                       height="400"
-                      header="Cadastrar/Editar"
+                      header="Cadastrar/Editar Crianças"
                       modal="true"
                       resizable="false"
                       draggable="false">
@@ -136,7 +136,7 @@
                             <p:message for="unidadeFrequencia" display="icon"/>
 
                             <h:outputText value="Recem-nascido"/>
-                            <p:inputText value="#{criancaMB.criancas.recemNascido}" size="40" id="recemNascido"/>
+                            <p:selectBooleanCheckbox value="#{criancaMB.criancas.recemNascido}" />
                             <p:message for="recemNascido" display="icon"/>
 
                             <h:outputText value="Data nascimento"/>
@@ -148,27 +148,52 @@
                             <p:message for="duracaoGestao" display="icon"/>
 
                             <h:outputText value="Tipo parto"/>
-                            <p:inputText value="#{criancaMB.criancas.tipoParto}" size="40" id="tipoParto"/>
+                            <p:selectOneMenu value="#{criancaMB.criancas.tipoParto}">
+                                <f:selectItem itemLabel="SELECIONE" itemValue="" />
+                                <f:selectItem itemLabel="Normal" itemValue="Normal" />
+                                <f:selectItem itemLabel="Cesariana" itemValue="Cesariana" />
+                                <f:selectItem itemLabel="Aborto" itemValue="Aborto" />
+                            </p:selectOneMenu>
                             <p:message for="tipoParto" display="icon"/>
 
-                            <h:outputText value="Tamanho ao nascer"/>
+                            <h:outputText value="Tamanho ao nascer(cm)"/>
                             <p:inputText value="#{criancaMB.criancas.tamnhoNascer}" size="10" id="tamnhoNascer"/>
                             <p:message for="tamnhoNascer" display="icon"/>
 
-                            <h:outputText value="Peso ao nascer"/>
+                            <h:outputText value="Comprimento ao nascer(cm)"/>
+                            <p:inputText value="#{criancaMB.criancas.comprimentoNascer}" size="10" id="comprimentoNascer"/>
+                            <p:message for="comprimentoNascer" display="icon"/>
+                            
+                            <h:outputText value="Peso ao nascer(g)"/>
                             <p:inputText value="#{criancaMB.criancas.pesoNascer}" size="10" id="pesoNascer"/>
                             <p:message for="pesoNascer" display="icon"/>
 
-                            <h:outputText value="Comprimento ao nascer"/>
-                            <p:inputText value="#{criancaMB.criancas.comprimentoNascer}" size="10" id="comprimentoNascer"/>
-                            <p:message for="comprimentoNascer" display="icon"/>
-
                             <h:outputText value="Tipagem sanguinea"/>
-                            <p:inputText value="#{criancaMB.criancas.tipagemSanguinea}" size="10" id="tipagemSanguinea"/>
+                            <p:selectOneMenu value="#{criancaMB.criancas.tipagemSanguinea}">
+                                <f:selectItem itemLabel="SELECIONE" itemValue="" />
+                                <f:selectItem itemLabel="O-" itemValue="O-" />
+                                <f:selectItem itemLabel="O+" itemValue="O+" />
+                                <f:selectItem itemLabel="A-" itemValue="A-" />
+                                <f:selectItem itemLabel="A+" itemValue="A+" />
+                                <f:selectItem itemLabel="B-" itemValue="B-" />
+                                <f:selectItem itemLabel="B+" itemValue="B+" />
+                                <f:selectItem itemLabel="AB-" itemValue="AB-" />
+                                <f:selectItem itemLabel="AB+" itemValue="AB+" />
+                            </p:selectOneMenu>
                             <p:message for="tipagemSanguinea" display="icon"/>
 
                             <h:outputText value="Tipagem sanguinea mae"/>
-                            <p:inputText value="#{criancaMB.criancas.tipagemSanguineaMae}" size="10" id="tipagemSanguineaMae"/>
+                            <p:selectOneMenu value="#{criancaMB.criancas.tipagemSanguineaMae}">
+                                <f:selectItem itemLabel="SELECIONE" itemValue="" />
+                                <f:selectItem itemLabel="O-" itemValue="O-" />
+                                <f:selectItem itemLabel="O+" itemValue="O+" />
+                                <f:selectItem itemLabel="A-" itemValue="A-" />
+                                <f:selectItem itemLabel="A+" itemValue="A+" />
+                                <f:selectItem itemLabel="B-" itemValue="B-" />
+                                <f:selectItem itemLabel="B+" itemValue="B+" />
+                                <f:selectItem itemLabel="AB-" itemValue="AB-" />
+                                <f:selectItem itemLabel="AB+" itemValue="AB+" />
+                            </p:selectOneMenu>
                             <p:message for="tipagemSanguineaMae" display="icon"/>
 
                             <h:outputText value="Teste do pesinho"/>
@@ -203,6 +228,14 @@
                 <h:panelGrid columns="1" id="ViewPanel">
                     <h:form>
                         <h:panelGrid columns="6">
+                            <h:outputText value="Unidade frequencia"/>
+                            <p:inputText value="#{criancaMB.criancas.unidadeFrequencia}" size="40" id="unidadeFrequencia" disabled="true"/>
+                            <p:message for="unidadeFrequencia" display="icon"/>
+
+                            <h:outputText value="Recem-nascido"/>
+                            <p:selectBooleanCheckbox value="#{criancaMB.criancas.recemNascido}" disabled="true"/>
+                            <p:message for="recemNascido" display="icon"/>
+
                             <h:outputText value="Data nascimento"/>
                             <p:inputText value="#{criancaMB.criancas.dataNascimento}" size="20" id="dataNascimento" disabled="true"/>
                             <p:message for="dataNascimento" display="icon"/>
@@ -215,17 +248,17 @@
                             <p:inputText value="#{criancaMB.criancas.tipoParto}" size="40" id="tipoParto" disabled="true"/>
                             <p:message for="tipoParto" display="icon"/>
 
-                            <h:outputText value="Tamanho ao nascer"/>
+                            <h:outputText value="Tamanho ao nascer(cm)"/>
                             <p:inputText value="#{criancaMB.criancas.tamnhoNascer}" size="10" id="tamnhoNascer" disabled="true"/>
                             <p:message for="tamnhoNascer" display="icon"/>
 
-                            <h:outputText value="Peso ao nascer"/>
-                            <p:inputText value="#{criancaMB.criancas.pesoNascer}" size="10" id="pesoNascer" disabled="true"/>
-                            <p:message for="pesoNascer" display="icon"/>
-
-                            <h:outputText value="Comprimento ao nascer"/>
+                            <h:outputText value="Comprimento ao nascer(cm)"/>
                             <p:inputText value="#{criancaMB.criancas.comprimentoNascer}" size="10" id="comprimentoNascer" disabled="true"/>
                             <p:message for="comprimentoNascer" display="icon"/>
+
+                            <h:outputText value="Peso ao nascer(g)"/>
+                            <p:inputText value="#{criancaMB.criancas.pesoNascer}" size="10" id="pesoNascer" disabled="true"/>
+                            <p:message for="pesoNascer" display="icon"/>
 
                             <h:outputText value="Tipagem sanguinea"/>
                             <p:inputText value="#{criancaMB.criancas.tipagemSanguinea}" size="10" id="tipagemSanguinea" disabled="true"/>
