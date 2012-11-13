@@ -46,6 +46,14 @@
                     <f:facet name="header">
                         <h:outputText value="Usuarios do sistema" />
                     </f:facet>
+                    
+                    <p:column sortBy="#{n.parceiro}">
+                        <f:facet name="header">
+                            <h:outputText value="Parceiro" />
+                        </f:facet>
+                        <h:outputText value="#{n.parceiro}" id="nome" />
+                    </p:column>
+
                                         
                     <p:column>
                         <f:facet name="header">
@@ -152,7 +160,9 @@
             
                         <h:panelGrid columns="6">
                             
-                            
+                        <h:outputText value="Parceiro" />
+                        <p:inputText value="#{parceiroMB.parceiros.parceiro}" size="40" id="nome" required="true" requiredMessage="Campo Obrigatório."/>
+                            <p:message for="nome" display="icon"/>    
 
                             <h:outputText value="Tipo"/>
                             <p:inputText value="#{parceiroMB.parceiros.tipoParceiro}" size="20" id="tipo" />
@@ -187,7 +197,9 @@
                         <h:panelGrid columns="6">
 
                             
-
+                            <h:outputText value="Parceiro"/>
+                            <p:inputText value="#{parceiroMB.parceiros.parceiro}" id="nome" disabled="true"/>
+                            <p:message for="tipo" display="icon"/>
 
                             <h:outputText value="Tipo"/>
                             <p:inputText value="#{parceiroMB.parceiros.tipoParceiro}" id="tipo" disabled="true"/>
