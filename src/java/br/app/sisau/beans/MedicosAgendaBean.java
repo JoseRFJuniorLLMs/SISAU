@@ -15,7 +15,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "MedicosAgendaBean.findAll", query = "SELECT m FROM MedicosAgendaBean m"),
     @NamedQuery(name = "MedicosAgendaBean.findByPkMedicosAgenda", query = "SELECT m FROM MedicosAgendaBean m WHERE m.pkMedicosAgenda = :pkMedicosAgenda")})
+
 public class MedicosAgendaBean implements Serializable {
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
