@@ -12,7 +12,6 @@
         <ui:define name="conteudo">
         <p:growl globalOnly="true" id="msgNotificacao"/>
             <h:form id="form1">
-
                 <p:panel header="#{msgs.form_find}">
                     <h:panelGrid columns="6">
                         <h:outputText value="Palavra Chave" />
@@ -71,13 +70,12 @@
                             <h:outputText value="Ação" />
                         </f:facet>
 
-                        <p:commandLink id="editlink" oncomplete="addEditPopup.show();" 
-                                       update=":addEditPanel" action="#{medicoMB.prepareEditar}" immediate="true">
-                            <p:graphicImage value="/images/icons/edit.png" style="border:0"/>
+                        <p:commandLink id="editlink" oncomplete="addEditPopup.show();" update="addEditPanel"
+                                       action="#{medicoMB.prepareEditar}" immediate="true" disabled="#{!medicoMB.podeEditarMedico}">
+                            <h:graphicImage value="#{medicoMB.imagemEditarRegistro}" style="border:0" />
                             <f:setPropertyActionListener value="#{n}" target="#{medicoMB.medicos}" />
                         </p:commandLink>
                         <p:tooltip for="editlink" value="Editar" />
-
 
                         <p:commandLink id="deletelink" oncomplete="deletePopup.show()">
                             <p:graphicImage value="/images/icons/del.png" style="border:0"/>
