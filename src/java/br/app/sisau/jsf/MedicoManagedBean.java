@@ -35,15 +35,18 @@ public class MedicoManagedBean implements Serializable {
     private String pesquisa;
    
     //IMAGENS
-    private String imagemPassword = "/images/icons/password.png";
-    private String imagemEditarRegistro = "/images/icons/editar.png";
-    private String imagemExcluirRegistro = "/images/icons/delete.png";
-    private String imagemCriarRegistro = "/images/icons/add1.png";
+    private boolean podeEditarMedico;
+    private boolean podeCriarMedico;
     private boolean excluirRegistrosTerceiros;
     private boolean editarRegistrosTerceiros;
     private boolean criarRegistro;
     private boolean exibirRegistrosTerceiros;
    
+    private String imagemPassword = "/images/icons/password.png";
+    private String imagemEditarRegistro = "/images/icons/editar.png";
+    private String imagemExcluirRegistro = "/images/icons/delete.png";
+    private String imagemCriarRegistro = "/images/icons/add1.png";
+    
     private static String ADICIONAR_STATE = "adicionar";
     private static String EDITAR_STATE = "editar";
     private String currentState = ADICIONAR_STATE;
@@ -70,6 +73,50 @@ public class MedicoManagedBean implements Serializable {
     public UserSessionManagedBean getUserSessionMB() {
         return userSessionMB;
     }
+    //img
+    public String getImagemCriarRegistro() {
+        if (podeCriarMedico) {
+            imagemCriarRegistro = "/images/icons/add1.png";
+        } else {
+            imagemCriarRegistro = "/images/icons/add1bw.png";
+        }
+        return imagemCriarRegistro;
+    }
+
+    public void setImagemCriarRegistro(String imagemCriarRegistro) {
+        this.imagemCriarRegistro = imagemCriarRegistro;
+    }
+
+    public String getImagemEditarRegistro() {
+        if (podeEditarMedico) {
+            imagemEditarRegistro = "/images/icons/editar.png";
+        } else {
+            imagemEditarRegistro = "/images/icons/editarbw.png";
+        }
+        return imagemEditarRegistro;
+    }
+
+    public void setImagemEditarRegistro(String imagemEditarRegistro) {
+        this.imagemEditarRegistro = imagemEditarRegistro;
+    }
+
+    public boolean isPodeCriarMedico() {
+        return podeCriarMedico;
+    }
+
+    public void setPodeCriarMedico(boolean podeCriarMedico) {
+        this.podeCriarMedico = podeCriarMedico;
+    }
+
+    public boolean isPodeEditarMedico() {
+        return podeEditarMedico;
+    }
+
+    public void setPodeEditarMedico(boolean podeEditarMedico) {
+        this.podeEditarMedico = podeEditarMedico;
+    }
+
+    //img
 
     public void setUserSessionMB(UserSessionManagedBean userSessionMB) {
         this.userSessionMB = userSessionMB;
@@ -204,28 +251,12 @@ public class MedicoManagedBean implements Serializable {
         this.imagemPassword = imagemPassword;
     }
 
-    public String getImagemEditarRegistro() {
-        return imagemEditarRegistro;
-    }
-
-    public void setImagemEditarRegistro(String imagemEditarRegistro) {
-        this.imagemEditarRegistro = imagemEditarRegistro;
-    }
-
     public String getImagemExcluirRegistro() {
         return imagemExcluirRegistro;
     }
 
     public void setImagemExcluirRegistro(String imagemExcluirRegistro) {
         this.imagemExcluirRegistro = imagemExcluirRegistro;
-    }
-
-    public String getImagemCriarRegistro() {
-        return imagemCriarRegistro;
-    }
-
-    public void setImagemCriarRegistro(String imagemCriarRegistro) {
-        this.imagemCriarRegistro = imagemCriarRegistro;
     }
 
     public boolean isExcluirRegistrosTerceiros() {
