@@ -5,7 +5,6 @@ import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
@@ -38,11 +37,17 @@ import javax.xml.bind.annotation.XmlTransient;
 public class CriancasBean implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
+    /*
+     * Jonh Lennon - 19/11/2012 às 12:45
+     * A seguinte notação, referente a sequência não existia no código, sua ausência não permitia que as crianças fossem cadastradas.
+     * Remoção de importação não utilizada.
+     */
+    @SequenceGenerator(name = "pkCriancas", sequenceName = "criancas_pk_criancas_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "pk_criancas", nullable = false)
     private Long pkCriancas;
+    
     @Column(name = "recem_nascido")
     private Boolean recemNascido;
     @Column(name = "data_nascimento")

@@ -27,24 +27,43 @@
                              #{criancaMB.listaCriancas.size()} registros encontrados" rowsPerPageTemplate="5,10,15">
                     <f:facet name="header"><h:outputText value="Usuarios do sistema"/></f:facet>
                     <p:column sortBy="#{n.dataNascimento}">
-                        <f:facet name="header"><h:outputText value="Data Nascimento"/></f:facet>
+                        <f:facet name="header">
+                            <h:outputText value="Data Nascimento"/>
+                        </f:facet>
                         <h:outputText value="#{n.dataNascimento}" id="dataNascimento"/>
                     </p:column>
                     <p:column>
                         <f:facet name="header">
-                            <h:outputText value="Peso ao nascer(g)"/>
+                            <h:outputText value="Nro. Cartao SUS"/>
+                        </f:facet>
+                        <h:outputText value="#{n.NCartaoSus}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Nro. Declaracao Nascido Vivo"/>
+                        </f:facet>
+                        <h:outputText value="#{n.NDeclaracaoNascidoVivo}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Nro. Registro Civil"/>
+                        </f:facet>
+                        <h:outputText value="#{n.NRegistroCivil}"/>
+                    </p:column>
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Peso ao nascer (g)"/>
                         </f:facet>
                         <h:outputText value="#{n.pesoNascer}"/>
                     </p:column>
                     <p:column>
                         <f:facet name="header">
-                            <h:outputText value="Tamanho ao nascer(cm)"/>
+                            <h:outputText value="Tamanho ao nascer (cm)"/>
                         </f:facet>
                         <h:outputText value="#{n.tamnhoNascer}"/>
                     </p:column>
                     <p:column>
                         <f:facet name="header"><h:outputText value="Ação"/></f:facet>
-
                         <p:commandLink id="Viewlink" oncomplete="ViewPopup.show();"
                                        update=":ViewPanel" action="#{criancaMB.prepareEditar}" immediate="true">
                             <p:graphicImage value="/images/icons/detail.png" style="border:0"/>
@@ -131,70 +150,86 @@
                 <h:panelGrid columns="1" id="addEditPanel">
                     <h:form>
                         <h:panelGrid columns="6">
+                            <h:outputText value="Cartao SUS"/>
+                            <p:inputText value="#{criancaMB.criancas.NCartaoSus}" id="NCartaoSus"/>
+                            <p:message for="NCartaoSus" display="icon"/>
+                            
+                            <h:outputText value="Declaracao de Nascido Vivo"/>
+                            <p:inputText value="#{criancaMB.criancas.NDeclaracaoNascidoVivo}" id="NDeclaracaoNascidoVivo"/>
+                            <p:message for="NDeclaracaoNascidoVivo" display="icon"/>
+                            
+                            <h:outputText value="Registro Civil"/>
+                            <p:inputText value="#{criancaMB.criancas.NRegistroCivil}" id="NRegistroCivil"/>
+                            <p:message for="NRegistroCivil" display="icon"/>
+                            
+                            <h:outputText value="UBS"/>
+                            <p:inputText value="#{criancaMB.criancas.NUbs}" id="NUbs"/>
+                            <p:message for="NUbs" display="icon"/>
+                            
                             <h:outputText value="Unidade frequencia"/>
-                            <p:inputText value="#{criancaMB.criancas.unidadeFrequencia}" size="40" id="unidadeFrequencia"/>
+                            <p:inputText value="#{criancaMB.criancas.unidadeFrequencia}" id="unidadeFrequencia"/>
                             <p:message for="unidadeFrequencia" display="icon"/>
-
-                            <h:outputText value="Recem-nascido"/>
-                            <p:selectBooleanCheckbox value="#{criancaMB.criancas.recemNascido}" />
-                            <p:message for="recemNascido" display="icon"/>
 
                             <h:outputText value="Data nascimento"/>
                             <p:calendar value="#{criancaMB.criancas.dataNascimento}" size="20" id="dataNascimento"/>
                             <p:message for="dataNascimento" display="icon"/>
+                            
+                            <h:outputText value="Recem-nascido"/>
+                            <p:selectBooleanCheckbox value="#{criancaMB.criancas.recemNascido}" id="recemNascido"/>
+                            <!--<p:message for="recemNascido" display="icon"/>-->
 
-                            <h:outputText value="Duracao gestacao"/>
+                            <h:outputText value="Duracao gestacao (meses)"/>
                             <p:inputText value="#{criancaMB.criancas.duracaoGestao}" size="10" id="duracaoGestao"/>
                             <p:message for="duracaoGestao" display="icon"/>
 
                             <h:outputText value="Tipo parto"/>
-                            <p:selectOneMenu value="#{criancaMB.criancas.tipoParto}">
+                            <p:selectOneMenu value="#{criancaMB.criancas.tipoParto}" id="tipoParto">
                                 <f:selectItem itemLabel="SELECIONE" itemValue="" />
-                                <f:selectItem itemLabel="Normal" itemValue="Normal" />
-                                <f:selectItem itemLabel="Cesariana" itemValue="Cesariana" />
-                                <f:selectItem itemLabel="Aborto" itemValue="Aborto" />
+                                <f:selectItem itemLabel="Normal" itemValue="normal" />
+                                <f:selectItem itemLabel="Cesariana" itemValue="cesariana" />
+                                <f:selectItem itemLabel="Aborto" itemValue="aborto" />
                             </p:selectOneMenu>
-                            <p:message for="tipoParto" display="icon"/>
-
-                            <h:outputText value="Tamanho ao nascer(cm)"/>
+                            <!--<p:message for="tipoParto" display="icon"/>-->
+                            
+                           <h:outputText value="Tamanho ao nascer (cm)"/>
                             <p:inputText value="#{criancaMB.criancas.tamnhoNascer}" size="10" id="tamnhoNascer"/>
                             <p:message for="tamnhoNascer" display="icon"/>
 
-                            <h:outputText value="Comprimento ao nascer(cm)"/>
+                            <h:outputText value="Comprimento ao nascer (cm)"/>
                             <p:inputText value="#{criancaMB.criancas.comprimentoNascer}" size="10" id="comprimentoNascer"/>
                             <p:message for="comprimentoNascer" display="icon"/>
                             
-                            <h:outputText value="Peso ao nascer(g)"/>
+                            <h:outputText value="Peso ao nascer (g)"/>
                             <p:inputText value="#{criancaMB.criancas.pesoNascer}" size="10" id="pesoNascer"/>
                             <p:message for="pesoNascer" display="icon"/>
 
                             <h:outputText value="Tipagem sanguinea"/>
                             <p:selectOneMenu value="#{criancaMB.criancas.tipagemSanguinea}">
                                 <f:selectItem itemLabel="SELECIONE" itemValue="" />
-                                <f:selectItem itemLabel="O-" itemValue="O-" />
-                                <f:selectItem itemLabel="O+" itemValue="O+" />
-                                <f:selectItem itemLabel="A-" itemValue="A-" />
-                                <f:selectItem itemLabel="A+" itemValue="A+" />
-                                <f:selectItem itemLabel="B-" itemValue="B-" />
-                                <f:selectItem itemLabel="B+" itemValue="B+" />
-                                <f:selectItem itemLabel="AB-" itemValue="AB-" />
-                                <f:selectItem itemLabel="AB+" itemValue="AB+" />
+                                <f:selectItem itemLabel="O-" itemValue="o-" />
+                                <f:selectItem itemLabel="O+" itemValue="o+" />
+                                <f:selectItem itemLabel="A-" itemValue="a-" />
+                                <f:selectItem itemLabel="A+" itemValue="a+" />
+                                <f:selectItem itemLabel="B-" itemValue="b-" />
+                                <f:selectItem itemLabel="B+" itemValue="b+" />
+                                <f:selectItem itemLabel="AB-" itemValue="ab-" />
+                                <f:selectItem itemLabel="AB+" itemValue="ab+" />
                             </p:selectOneMenu>
-                            <p:message for="tipagemSanguinea" display="icon"/>
+                            <!--<p:message for="tipagemSanguinea" display="icon"/>-->
 
                             <h:outputText value="Tipagem sanguinea mae"/>
                             <p:selectOneMenu value="#{criancaMB.criancas.tipagemSanguineaMae}">
                                 <f:selectItem itemLabel="SELECIONE" itemValue="" />
-                                <f:selectItem itemLabel="O-" itemValue="O-" />
-                                <f:selectItem itemLabel="O+" itemValue="O+" />
-                                <f:selectItem itemLabel="A-" itemValue="A-" />
-                                <f:selectItem itemLabel="A+" itemValue="A+" />
-                                <f:selectItem itemLabel="B-" itemValue="B-" />
-                                <f:selectItem itemLabel="B+" itemValue="B+" />
-                                <f:selectItem itemLabel="AB-" itemValue="AB-" />
-                                <f:selectItem itemLabel="AB+" itemValue="AB+" />
+                                <f:selectItem itemLabel="O-" itemValue="o-" />
+                                <f:selectItem itemLabel="O+" itemValue="o+" />
+                                <f:selectItem itemLabel="A-" itemValue="a-" />
+                                <f:selectItem itemLabel="A+" itemValue="a+" />
+                                <f:selectItem itemLabel="B-" itemValue="b-" />
+                                <f:selectItem itemLabel="B+" itemValue="b+" />
+                                <f:selectItem itemLabel="AB-" itemValue="ab-" />
+                                <f:selectItem itemLabel="AB+" itemValue="ab+" />
                             </p:selectOneMenu>
-                            <p:message for="tipagemSanguineaMae" display="icon"/>
+                            <!--<p:message for="tipagemSanguineaMae" display="icon"/>-->
 
                             <h:outputText value="Teste do pesinho"/>
                             <p:inputText value="#{criancaMB.criancas.testePesinho}" size="10" id="testePesinho"/>
@@ -228,19 +263,35 @@
                 <h:panelGrid columns="1" id="ViewPanel">
                     <h:form>
                         <h:panelGrid columns="6">
-                            <h:outputText value="Unidade frequencia"/>
-                            <p:inputText value="#{criancaMB.criancas.unidadeFrequencia}" size="40" id="unidadeFrequencia" disabled="true"/>
-                            <p:message for="unidadeFrequencia" display="icon"/>
+                            <h:outputText value="Cartao SUS"/>
+                            <p:inputText value="#{criancaMB.criancas.NCartaoSus}" id="NCartaoSus" disabled="true"/>
+                            <p:message for="NCartaoSus" display="icon"/>
+                            
+                            <h:outputText value="Declaracao de Nascido Vivo"/>
+                            <p:inputText value="#{criancaMB.criancas.NDeclaracaoNascidoVivo}" id="NDeclaracaoNascidoVivo" disabled="true"/>
+                            <p:message for="NDeclaracaoNascidoVivo" display="icon"/>
+                            
+                            <h:outputText value="Registro Civil"/>
+                            <p:inputText value="#{criancaMB.criancas.NRegistroCivil}" id="NRegistroCivil" disabled="true"/>
+                            <p:message for="NRegistroCivil" display="icon"/>
 
-                            <h:outputText value="Recem-nascido"/>
-                            <p:selectBooleanCheckbox value="#{criancaMB.criancas.recemNascido}" disabled="true"/>
-                            <p:message for="recemNascido" display="icon"/>
+                            <h:outputText value="UBS"/>
+                            <p:inputText value="#{criancaMB.criancas.NUbs}" id="NUbs" disabled="true"/>
+                            <p:message for="NUbs" display="icon"/>
+                            
+                            <h:outputText value="Unidade frequencia"/>
+                            <p:inputText value="#{criancaMB.criancas.unidadeFrequencia}" id="unidadeFrequencia" disabled="true"/>
+                            <p:message for="unidadeFrequencia" display="icon"/>
 
                             <h:outputText value="Data nascimento"/>
                             <p:inputText value="#{criancaMB.criancas.dataNascimento}" size="20" id="dataNascimento" disabled="true"/>
                             <p:message for="dataNascimento" display="icon"/>
 
-                            <h:outputText value="Duracao gestacao"/>
+                            <h:outputText value="Recem-nascido"/>
+                            <p:selectBooleanCheckbox value="#{criancaMB.criancas.recemNascido}" disabled="true"/>
+                            <!--<p:message for="recemNascido" display="icon"/>-->
+
+                            <h:outputText value="Duracao gestacao (meses)"/>
                             <p:inputText value="#{criancaMB.criancas.duracaoGestao}" size="10" id="duracaoGestao" disabled="true"/>
                             <p:message for="duracaoGestao" display="icon"/>
 
@@ -248,15 +299,15 @@
                             <p:inputText value="#{criancaMB.criancas.tipoParto}" size="40" id="tipoParto" disabled="true"/>
                             <p:message for="tipoParto" display="icon"/>
 
-                            <h:outputText value="Tamanho ao nascer(cm)"/>
+                            <h:outputText value="Tamanho ao nascer (cm)"/>
                             <p:inputText value="#{criancaMB.criancas.tamnhoNascer}" size="10" id="tamnhoNascer" disabled="true"/>
                             <p:message for="tamnhoNascer" display="icon"/>
 
-                            <h:outputText value="Comprimento ao nascer(cm)"/>
+                            <h:outputText value="Comprimento ao nascer (cm)"/>
                             <p:inputText value="#{criancaMB.criancas.comprimentoNascer}" size="10" id="comprimentoNascer" disabled="true"/>
                             <p:message for="comprimentoNascer" display="icon"/>
 
-                            <h:outputText value="Peso ao nascer(g)"/>
+                            <h:outputText value="Peso ao nascer (g)"/>
                             <p:inputText value="#{criancaMB.criancas.pesoNascer}" size="10" id="pesoNascer" disabled="true"/>
                             <p:message for="pesoNascer" display="icon"/>
 
@@ -271,6 +322,10 @@
                             <h:outputText value="Teste do pesinho"/>
                             <p:inputText value="#{criancaMB.criancas.testePesinho}" size="10" id="testePesinho" disabled="true"/>
                             <p:message for="testePesinho" display="icon"/>
+
+                            <h:outputText value="Familia"/>
+                            <p:inputText value="#{criancaMB.criancas.fkFamilia.nome}" id="familia" disabled="true"/>
+                            <p:message for="familia" display="icon"/>
                         </h:panelGrid>
                     </h:form>
                 </h:panelGrid>
